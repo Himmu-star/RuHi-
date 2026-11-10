@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuHi — Chapter 01: The Beginning</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Dancing+Script:wght@400;600;700&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: '#171219',
+                        burgundy: '#251622',
+                        roseDeep: '#6E3048',
+                        dustyRose: '#B77B91',
+                        gold: '#D8B77E',
+                        ivory: '#F4EADF',
+                        mutedText: '#BBAEB6'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        handwriting: ['"Dancing Script"', 'cursive']
+                    },
+                    animation: {
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 4s infinite ease-in-out',
+                        'spin-slow': 'spin 25s linear infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-15px) rotate(4deg)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(1.05)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Smooth Scroll & Scrollbar Styling */
+        html {
+            scroll-behavior: smooth;
+            background-color: #171219;
+            color: #F4EADF;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #171219;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6E3048;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D8B77E;
+        }
+
+        /* Glassmorphism effects */
+        .glass-card {
+            background: rgba(37, 22, 34, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(216, 183, 126, 0.15);
+        }
+
+        .glass-card-interactive {
+            background: rgba(37, 22, 34, 0.65);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(183, 123, 145, 0.25);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card-interactive:hover {
+            border-color: rgba(216, 183, 126, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(110, 48, 72, 0.4);
+        }
+
+        /* Canvas Overlay for Floating Petals */
+        #petalCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Ambient Glow Spheres */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6E3048, #D8B77E, #F4EADF);
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Page Transition Overlay */
+        #transition-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #171219;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* Rose Petal Opening Animation */
+        .rose-petal {
+            transform-origin: bottom center;
+            transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
+        }
+
+        .rose-bloomed .petal-left {
+            transform: rotate(-32deg) translateY(-8px) scale(1.1);
+        }
+        .rose-bloomed .petal-right {
+            transform: rotate(32deg) translateY(-8px) scale(1.1);
+        }
+        .rose-bloomed .petal-center {
+            transform: scale(1.15) translateY(-4px);
+        }
+        .rose-bloomed .rose-core {
+            filter: drop-shadow(0 0 15px rgba(216, 183, 126, 0.9));
+        }
+
+        /* Typography Animation Utility */
+        .word-reveal {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .word-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll reveal class */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-midnight text-ivory font-sans antialiased overflow-x-hidden min-h-screen relative selection:bg-roseDeep selection:text-gold">
+
+    <!-- Page Loading / Smooth Entrance Overlay -->
+    <div id="transition-overlay"></div>
+
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress"></div>
+
+    <!-- Background Canvas for Interactive Rose Petals & Light Dust -->
+    <canvas id="petalCanvas"></canvas>
+
+    <!-- Background Ambient Glow Orbs -->
+    <div class="glow-orb bg-roseDeep/20 w-96 h-96 top-10 left-1/2 -translate-x-1/2 animate-pulse-glow"></div>
+    <div class="glow-orb bg-gold/10 w-80 h-80 top-[40%] -left-20"></div>
+    <div class="glow-orb bg-burgundy/40 w-[30rem] h-[30rem] bottom-20 right-0"></div>
+
+    <!-- TOP HEADER / BRANDING & NAVIGATION -->
+    <header class="fixed top-0 left-0 w-full z-40 px-4 sm:px-8 py-4 flex items-center justify-between glass-card border-b border-gold/10 backdrop-blur-md">
+        <!-- RuHi Branding -->
+        <a href="index.html" onclick="navigateTo(event, 'index.html')" class="group flex items-center gap-3 focus:outline-none">
+            <span class="w-8 h-8 rounded-full border border-gold/40 flex items-center justify-center text-gold text-xs font-serif transition-transform group-hover:scale-110">R</span>
+            <div class="flex flex-col">
+                <span class="font-serif tracking-[0.2em] text-sm text-ivory group-hover:text-gold transition-colors">RUHI</span>
+                <span class="text-[9px] tracking-widest text-mutedText uppercase">A Little Universe</span>
+            </div>
+        </a>
+
+        <!-- Chapter Indicator -->
+        <div class="flex items-center gap-2 bg-burgundy/60 border border-gold/20 px-3 py-1 rounded-full text-xs font-sans">
+            <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
+            <span class="text-gold font-medium">CHAPTER 01</span>
+            <span class="text-mutedText">/ 11</span>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex items-center gap-2 sm:gap-4">
+            <a href="index.html" onclick="navigateTo(event, 'index.html')" class="hidden sm:flex items-center gap-1 text-xs text-mutedText hover:text-gold transition-colors px-3 py-1.5 rounded-full hover:bg-roseDeep/20">
+                <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                <span>Entrance</span>
+            </a>
+            <a href="3.html" onclick="navigateTo(event, '3.html')" class="flex items-center gap-1.5 text-xs bg-roseDeep/40 hover:bg-roseDeep border border-gold/30 text-gold hover:text-ivory px-3.5 py-1.5 rounded-full transition-all hover:shadow-[0_0_15px_rgba(216,183,126,0.3)]">
+                <span>Next</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </a>
+        </nav>
+    </header>
+
+    <!-- FLOATING MUSIC PLAYER -->
+    <div class="fixed bottom-6 left-6 z-40 flex items-center gap-3">
+        <button id="musicToggleBtn" class="w-12 h-12 rounded-full glass-card border border-gold/30 flex items-center justify-center text-gold hover:text-ivory hover:border-gold transition-all shadow-lg hover:scale-105 active:scale-95 focus:outline-none group">
+            <i id="musicIcon" class="fa-solid fa-music text-sm group-hover:rotate-12 transition-transform"></i>
+        </button>
+        <div id="musicStatus" class="hidden sm:flex flex-col glass-card px-3 py-1.5 rounded-lg border border-gold/10 text-xs">
+            <span class="text-ivory font-serif text-[11px] font-medium">Atmospheric Melody</span>
+            <span id="musicStateText" class="text-[9px] text-mutedText">Click to Play Ambient</span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="relative z-20 pt-28 pb-20 px-4 sm:px-6 max-w-4xl mx-auto flex flex-col items-center">
+
+        <!-- SECTION 1: HERO SECTION -->
+        <section class="min-h-[85vh] flex flex-col items-center justify-center text-center py-12 relative w-full">
+            
+            <!-- Garden Arch SVG Decorative Frame -->
+            <div class="w-full max-w-md mx-auto mb-6 relative opacity-80">
+                <svg viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto stroke-gold/30">
+                    <path d="M 20 110 C 20 40, 100 10, 200 10 C 300 10, 380 40, 380 110" stroke-width="1.5" stroke-dasharray="4 4" />
+                    <path d="M 40 110 C 40 50, 110 25, 200 25 C 290 25, 360 50, 360 110" stroke-width="1" />
+                    <circle cx="200" cy="10" r="4" class="fill-gold" />
+                    <circle cx="120" cy="28" r="2" class="fill-dustyRose" />
+                    <circle cx="280" cy="28" r="2" class="fill-dustyRose" />
+                </svg>
+            </div>
+
+            <!-- Chapter Subtitle & Badge -->
+            <div class="mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-roseDeep/20 backdrop-blur-sm animate-fade-in">
+                <i class="fa-solid fa-sparkles text-gold text-xs"></i>
+                <span class="text-xs font-serif tracking-[0.25em] text-gold uppercase">Chapter 01 — The Beginning</span>
+            </div>
+
+            <!-- Central Hero Rose Motif -->
+            <div class="my-6 relative cursor-pointer group" id="heroRoseWrapper">
+                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-b from-roseDeep/40 to-burgundy flex items-center justify-center border border-gold/40 shadow-[0_0_35px_rgba(110,48,72,0.6)] group-hover:shadow-[0_0_50px_rgba(216,183,126,0.5)] transition-all duration-700">
+                    <!-- SVG Rose Icon -->
+                    <svg class="w-12 h-12 sm:w-16 sm:h-16 text-dustyRose group-hover:text-gold transition-colors duration-500 animate-float-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a4 4 0 0 0-4 4c0 2.5 2 4.5 4 7 2-2.5 4-4.5 4-7a4 4 0 0 0-4-4z"/>
+                        <path d="M12 13v9"/>
+                        <path d="M12 18c-2.5 0-4-1.5-5-3"/>
+                        <path d="M12 16c2.5 0 4-1.5 5-3"/>
+                    </svg>
+                </div>
+                <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-gold/60 tracking-widest font-sans uppercase whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">RuHi's Universe</span>
+            </div>
+
+            <!-- Main Heading with Word-by-Word Animation -->
+            <h1 id="heroTitle" class="font-serif text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-ivory max-w-2xl leading-tight my-4">
+                <!-- Injected via JavaScript for animated word reveal -->
+                "Every Beautiful Story Begins Somewhere..."
+            </h1>
+
+            <p id="heroSubtitle" class="font-handwriting text-2xl sm:text-3xl text-gold mt-2 max-w-md opacity-0 transition-opacity duration-1000">
+                And somehow, mine began with you.
+            </p>
+
+            <!-- Downward Scroll Indicator -->
+            <div class="mt-16 animate-bounce opacity-70 hover:opacity-100 transition-opacity cursor-pointer" onclick="document.getElementById('story-editorial').scrollIntoView({behavior: 'smooth'})">
+                <span class="block text-[10px] tracking-widest text-mutedText uppercase mb-2 font-sans">Scroll to Discover</span>
+                <i class="fa-solid fa-arrow-down-long text-gold text-sm"></i>
+            </div>
+        </section>
+
+
+        <!-- SECTION 2: EDITORIAL STORY INTRODUCTION -->
+        <section id="story-editorial" class="w-full py-16 sm:py-24 my-8 reveal-on-scroll">
+            <div class="glass-card rounded-2xl p-8 sm:p-12 border border-gold/20 shadow-2xl relative overflow-hidden">
+                <!-- Decorative Subtle Background Pattern -->
+                <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-roseDeep/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-2xl mx-auto space-y-8">
+                    <!-- Heading -->
+                    <h2 class="font-serif text-2xl sm:text-4xl text-gold leading-snug text-center italic">
+                        "Some beginnings are so ordinary, we don't realise how extraordinary they will become."
+                    </h2>
+
+                    <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto"></div>
+
+                    <!-- Editorial Body Text -->
+                    <div class="space-y-6 text-base sm:text-lg text-ivory/90 leading-relaxed font-sans font-light tracking-wide text-justify sm:text-center">
+                        <p>
+                            Sometimes life introduces us to something special without making any announcements.
+                        </p>
+                        <p class="text-mutedText font-serif italic text-lg sm:text-xl">
+                            No grand music.&nbsp;&nbsp;•&nbsp;&nbsp;No dramatic scene.&nbsp;&nbsp;•&nbsp;&nbsp;No idea of what lies ahead.
+                        </p>
+                        <p>
+                            Just a quiet moment, a little curiosity, and a story that slowly starts becoming unforgettable.
+                        </p>
+                        <p class="text-gold/90 font-medium">
+                            And when I look back, I realise that some of my favourite memories in this world began with the simplest of moments.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 3: PERSONAL LETTER CARD WITH TYPEWRITER EFFECT -->
+        <section class="w-full py-12 my-8 reveal-on-scroll">
+            <div class="glass-card-interactive rounded-3xl p-8 sm:p-12 relative overflow-hidden border border-gold/30">
+                <!-- Top Corner Decorative Ribbon -->
+                <div class="absolute top-0 right-0 w-24 h-24 pointer-events-none overflow-hidden">
+                    <div class="bg-gradient-to-l from-gold/30 to-transparent w-full h-full transform rotate-45 translate-x-8 -translate-y-8"></div>
+                </div>
+
+                <div class="max-w-xl mx-auto">
+                    <!-- Letter Header -->
+                    <div class="flex items-center justify-between border-b border-gold/20 pb-4 mb-6">
+                        <span class="font-handwriting text-3xl text-gold">Dear RuHi,</span>
+                        <i class="fa-solid fa-envelope-open-text text-dustyRose text-xl"></i>
+                    </div>
+
+                    <!-- Letter Body Container with Typewriter -->
+                    <div class="min-h-[160px]">
+                        <p id="typewriterText" class="font-sans text-base sm:text-lg text-ivory/90 leading-relaxed font-light">
+                            <!-- Injected dynamically by JS typewriter effect -->
+                        </p>
+                    </div>
+
+                    <!-- Signature -->
+                    <div class="mt-8 pt-6 border-t border-gold/15 flex flex-col items-end">
+                        <span class="text-xs text-mutedText uppercase tracking-widest font-sans mb-1">With all my love,</span>
+                        <span class="font-handwriting text-3xl text-gold tracking-wide">Himmu</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 4: INTERACTIVE DISCOVERY ROSE SECTION -->
+        <section class="w-full py-16 my-8 reveal-on-scroll flex flex-col items-center text-center">
+            <div class="glass-card rounded-3xl p-8 sm:p-10 w-full max-w-xl border border-roseDeep/40 flex flex-col items-center">
+                
+                <span class="text-xs font-serif tracking-[0.2em] text-dustyRose uppercase mb-2">Interactive Secret</span>
+                <h3 class="font-serif text-xl sm:text-2xl text-ivory mb-6">
+                    "There's something beautiful hidden in every beginning."
+                </h3>
+
+                <!-- Interactive SVG Blooming Rose -->
+                <div id="interactiveRoseContainer" class="w-32 h-32 my-4 relative flex items-center justify-center cursor-pointer group" title="Click to bloom the secret">
+                    <svg id="secretRoseSVG" class="w-28 h-28 text-roseDeep transition-all duration-700" viewBox="0 0 100 100" fill="none">
+                        <!-- Background Glow Stem -->
+                        <path d="M50 70 L50 95" stroke="#6E3048" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M50 82 Q35 75 30 65" stroke="#6E3048" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M50 88 Q65 80 70 70" stroke="#6E3048" stroke-width="3" stroke-linecap="round"/>
+                        
+                        <!-- Outer Petals Left/Right -->
+                        <path class="rose-petal petal-left fill-roseDeep stroke-gold/40" d="M35 45 C20 30, 25 65, 50 68 C35 65, 25 55, 35 45 Z"/>
+                        <path class="rose-petal petal-right fill-roseDeep stroke-gold/40" d="M65 45 C80 30, 75 65, 50 68 C65 65, 75 55, 65 45 Z"/>
+                        
+                        <!-- Center Petals -->
+                        <path class="rose-petal petal-center fill-dustyRose stroke-gold/50" d="M40 38 C35 25, 65 25, 60 38 C65 52, 35 52, 40 38 Z"/>
+                        
+                        <!-- Rose Core Glow Center -->
+                        <circle class="rose-core fill-gold transition-all duration-500" cx="50" cy="42" r="7"/>
+                    </svg>
+                </div>
+
+                <!-- Interactive Button -->
+                <button id="bloomBtn" class="mt-4 px-6 py-2.5 rounded-full bg-gradient-to-r from-roseDeep to-burgundy border border-gold/40 text-gold hover:text-ivory text-sm font-sans tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(216,183,126,0.4)] active:scale-95 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                    <span>Discover a Little Secret</span>
+                </button>
+
+                <!-- Hidden Revealed Secret Box -->
+                <div id="secretMessageContainer" class="max-h-0 overflow-hidden opacity-0 transition-all duration-700 ease-in-out w-full mt-4">
+                    <div class="mt-4 p-5 rounded-xl bg-burgundy/80 border border-gold/30 text-gold/90 font-serif italic text-base leading-relaxed shadow-inner">
+                        "If I could revisit one thing, it would be the beginning — just to experience that little feeling all over again, knowing where it would lead."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 5: CHAPTER ENDING & NEXT PAGE TRANSITION -->
+        <section class="w-full py-16 my-8 text-center reveal-on-scroll">
+            <div class="max-w-xl mx-auto space-y-6">
+                <!-- Glowing Arch graphic -->
+                <div class="w-20 h-10 border-t-2 border-x-2 border-gold/40 rounded-t-full mx-auto opacity-70"></div>
+
+                <h2 class="font-serif text-3xl sm:text-4xl text-ivory">
+                    "But this is only the beginning..."
+                </h2>
+                
+                <p class="text-mutedText font-sans text-sm sm:text-base">
+                    Because every beautiful story has moments worth remembering.
+                </p>
+
+                <p class="font-handwriting text-2xl text-gold pt-2">
+                    Are you ready to revisit ours?
+                </p>
+
+                <!-- Forward Navigation Button to 3.html -->
+                <div class="pt-6">
+                    <a href="3.html" onclick="navigateTo(event, '3.html')" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-roseDeep via-burgundy to-roseDeep border-2 border-gold/50 text-gold hover:text-ivory font-serif text-lg tracking-wider transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(216,183,126,0.5)] active:scale-95 group">
+                        <span>Continue Our Story</span>
+                        <i class="fa-solid fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER / NAV BAR -->
+    <footer class="w-full border-t border-gold/10 py-8 text-center relative z-20 glass-card">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-mutedText">
+            <div class="flex items-center gap-2 font-serif">
+                <span class="text-gold">RuHi Universe</span>
+                <span>•</span>
+                <span>Chapter 01 of 11</span>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <a href="index.html" onclick="navigateTo(event, 'index.html')" class="hover:text-gold transition-colors">
+                    <i class="fa-solid fa-house text-xs mr-1"></i> Entrance
+                </a>
+                <a href="3.html" onclick="navigateTo(event, '3.html')" class="hover:text-gold transition-colors">
+                    Chapter 02 <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i>
+                </a>
+            </div>
+
+            <div class="text-[10px] text-mutedText/60">
+                Made with love by Himmu
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* --------------------------------------------------
+         * 1. SHARED ACCESS & SESSION VALIDATION
+         * -------------------------------------------------- */
+        (function checkAccess() {
+            // Respect existing shared session access if present in localStorage or sessionStorage
+            const isUnlocked = localStorage.getItem('ruhi_unlocked') || sessionStorage.getItem('ruhi_unlocked');
+            // If direct URL navigation occurs without unlock, default gracefully without breaking UI
+            if (!isUnlocked) {
+                // Set default session key so user can experience story smoothly
+                sessionStorage.setItem('ruhi_unlocked', 'true');
+            }
+        })();
+
+
+        /* --------------------------------------------------
+         * 2. PAGE TRANSITIONS (Smooth Fade out & Fade in)
+         * -------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('transition-overlay');
+            // Smooth entrance fade-in
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+            }, 100);
+        });
+
+        function navigateTo(event, url) {
+            event.preventDefault();
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.opacity = '1';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 750);
+        }
+
+
+        /* --------------------------------------------------
+         * 3. SCROLL PROGRESS INDICATOR
+         * -------------------------------------------------- */
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+
+        /* --------------------------------------------------
+         * 4. HERO TITLE ANIMATION (Word-by-Word Reveal)
+         * -------------------------------------------------- */
+        const titleElement = document.getElementById('heroTitle');
+        const textContent = `"Every Beautiful Story Begins Somewhere..."`;
+        
+        // Break text into word elements
+        const words = textContent.split(' ');
+        titleElement.innerHTML = words.map(word => `<span class="word-reveal">${word}</span>`).join(' ');
+
+        window.addEventListener('load', () => {
+            const wordSpans = titleElement.querySelectorAll('.word-reveal');
+            wordSpans.forEach((span, idx) => {
+                setTimeout(() => {
+                    span.classList.add('visible');
+                }, 250 + (idx * 140));
+            });
+
+            // Reveal subtitle after title finishes
+            setTimeout(() => {
+                document.getElementById('heroSubtitle').style.opacity = '1';
+            }, 250 + (words.length * 140) + 200);
+        });
+
+
+        /* --------------------------------------------------
+         * 5. TYPEWRITER EFFECT FOR THE PERSONAL MESSAGE
+         * -------------------------------------------------- */
+        const letterMessage = "I don't know whether I could ever put everything into words, but I wanted to create something that would hold a little piece of everything I feel. Not just a birthday wish. Not just photographs. Not just a collection of memories. Something that tells a story... Our story, through my eyes. So take your time, explore every little corner, and let each page reveal something special.";
+        const typewriterEl = document.getElementById('typewriterText');
+        let letterIndex = 0;
+        let typewriterStarted = false;
+
+        function startTypewriter() {
+            if (typewriterStarted) return;
+            typewriterStarted = true;
+            typewriterEl.innerHTML = '';
+            
+            function typeNextChar() {
+                if (letterIndex < letterMessage.length) {
+                    typewriterEl.innerHTML += letterMessage.charAt(letterIndex);
+                    letterIndex++;
+                    setTimeout(typeNextChar, 25);
+                }
+            }
+            typeNextChar();
+        }
+
+
+        /* --------------------------------------------------
+         * 6. SCROLL REVEAL OBSERVER
+         * -------------------------------------------------- */
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Trigger typewriter if letter section comes into view
+                    if (entry.target.contains(typewriterEl)) {
+                        startTypewriter();
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        revealElements.forEach(el => observer.observe(el));
+
+
+        /* --------------------------------------------------
+         * 7. INTERACTIVE SECRET BLOOMING ROSE
+         * -------------------------------------------------- */
+        const bloomBtn = document.getElementById('bloomBtn');
+        const secretContainer = document.getElementById('secretMessageContainer');
+        const roseSVG = document.getElementById('secretRoseSVG');
+        const interactiveRoseContainer = document.getElementById('interactiveRoseContainer');
+        let isBloomed = false;
+
+        function toggleRoseBloom() {
+            isBloomed = !isBloomed;
+            if (isBloomed) {
+                roseSVG.classList.add('rose-bloomed');
+                secretContainer.style.maxHeight = '200px';
+                secretContainer.style.opacity = '1';
+                bloomBtn.querySelector('span').innerText = 'Hide Secret';
+            } else {
+                roseSVG.classList.remove('rose-bloomed');
+                secretContainer.style.maxHeight = '0px';
+                secretContainer.style.opacity = '0';
+                bloomBtn.querySelector('span').innerText = 'Discover a Little Secret';
+            }
+        }
+
+        bloomBtn.addEventListener('click', toggleRoseBloom);
+        interactiveRoseContainer.addEventListener('click', toggleRoseBloom);
+
+
+        /* --------------------------------------------------
+         * 8. ATMOSPHERIC CANVAS: FLOATING PETALS & PARTICLES
+         * -------------------------------------------------- */
+        const canvas = document.getElementById('petalCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Petals Array
+        const petals = [];
+        const petalCount = 28;
+
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -20 - Math.random() * 50;
+                this.size = 6 + Math.random() * 8;
+                this.speedY = 0.6 + Math.random() * 1.2;
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.8;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 1.5;
+                this.opacity = 0.3 + Math.random() * 0.5;
+                this.color = Math.random() > 0.4 ? '#6E3048' : '#B77B91';
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) * 0.5 + this.speedX;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > height + 20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+
+                // Draw organic petal shape
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size, -this.size / 2, -this.size, this.size, 0, this.size * 1.5);
+                ctx.bezierCurveTo(this.size, this.size, this.size, -this.size / 2, 0, 0);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < petalCount; i++) {
+            petals.push(new Petal());
+        }
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, width, height);
+            petals.forEach(petal => {
+                petal.update();
+                petal.draw();
+            });
+            requestAnimationFrame(animatePetals);
+        }
+
+        animatePetals();
+
+
+        /* --------------------------------------------------
+         * 9. FLOATING MUSIC PLAYER (WEB AUDIO SYNTHESIZER FALLBACK)
+         * -------------------------------------------------- */
+        const musicToggleBtn = document.getElementById('musicToggleBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        const musicStateText = document.getElementById('musicStateText');
+        
+        let isPlaying = false;
+        let audioCtx = null;
+        let synthInterval = null;
+
+        // Soft ambient harmonic synthesizer using Web Audio API
+        function playAmbientSound() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const notes = [261.63, 329.63, 392.00, 523.25, 440.00]; // C4, E4, G4, C5, A4
+            let noteIdx = 0;
+
+            synthInterval = setInterval(() => {
+                if (!isPlaying) return;
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(notes[noteIdx % notes.length], audioCtx.currentTime);
+
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.05, audioCtx.currentTime + 1);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.8);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 4);
+
+                noteIdx++;
+            }, 2400);
+        }
+
+        function stopAmbientSound() {
+            if (synthInterval) clearInterval(synthInterval);
+        }
+
+        musicToggleBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                musicIcon.className = "fa-solid fa-volume-high text-gold animate-pulse";
+                musicStateText.innerText = "Playing Atmosphere";
+                playAmbientSound();
+            } else {
+                musicIcon.className = "fa-solid fa-music text-sm";
+                musicStateText.innerText = "Click to Play Ambient";
+                stopAmbientSound();
+            }
+        });
+    </script>
+</body>
+</html>
