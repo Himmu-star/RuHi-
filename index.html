@@ -130,6 +130,31 @@
             .cursor-glow { display: block; }
         }
 
+        /* Discreet Corner Secret Trigger Dot */
+        .secret-dot-trigger {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 95;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(216, 183, 126, 0.25);
+            border: 1px solid rgba(216, 183, 126, 0.4);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(216, 183, 126, 0.2);
+        }
+
+        .secret-dot-trigger:hover {
+            background: var(--champagne-gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 15px var(--champagne-gold);
+        }
+
         /* -----------------------------------------------------------------
            3. CONTAINER & TYPOGRAPHY
            ----------------------------------------------------------------- */
@@ -211,19 +236,12 @@
            ----------------------------------------------------------------- */
         .cards-container {
             width: 100%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
+            max-width: 540px;
+            display: flex;
+            justify-content: center;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInCards 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
-        }
-
-        @media (min-width: 768px) {
-            .cards-container {
-                grid-template-columns: 1fr 1fr;
-            }
         }
 
         @keyframes fadeInCards {
@@ -231,6 +249,7 @@
         }
 
         .card-panel {
+            width: 100%;
             background: rgba(37, 22, 34, 0.65);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -267,6 +286,7 @@
             align-items: center;
             gap: 0.75rem;
             margin-bottom: 1.25rem;
+            justify-content: center;
         }
 
         .card-icon {
@@ -294,11 +314,48 @@
             color: var(--muted-text);
             margin-bottom: 1.75rem;
             line-height: 1.5;
+            text-align: center;
         }
 
         /* -----------------------------------------------------------------
-           5. FORMS & INPUTS (OPTION A)
+           5. SECRET MODAL & FORMS
            ----------------------------------------------------------------- */
+        .secret-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 12, 18, 0.88);
+            backdrop-filter: blur(15px);
+            z-index: 250;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .secret-modal-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--champagne-gold);
+            border-radius: 16px;
+            padding: 2.25rem 1.75rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: var(--shadow-lux);
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--muted-text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .modal-close-btn:hover { color: var(--champagne-gold); }
+
         .passcode-form {
             display: flex;
             flex-direction: column;
@@ -727,6 +784,9 @@
     <div class="cursor-glow" id="cursorGlow"></div>
     <canvas id="ambient-canvas"></canvas>
 
+    <!-- Subtle Secret Dot Trigger (Top Right Corner) -->
+    <div class="secret-dot-trigger" title="Secret Portal" onclick="togglePasscodeModal(true)"></div>
+
     <!-- Discreet Preview Mode Indicator (Shown after password entry) -->
     <div class="preview-banner" id="previewBanner">
         <div class="preview-indicator-dot"></div>
@@ -749,39 +809,7 @@
         <!-- Access Cards Section -->
         <section class="cards-container">
 
-            <!-- OPTION A: SECRET PREVIEW -->
-            <article class="card-panel">
-                <div>
-                    <div class="card-icon-header">
-                        <div class="card-icon">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                            </svg>
-                        </div>
-                        <h2 class="card-title">Secret Entrance</h2>
-                    </div>
-                    <p class="card-desc">A private passageway reserved for the creator to preview and inspect the universe ahead of time.</p>
-                </div>
-
-                <form class="passcode-form" id="passcodeForm" onsubmit="handlePasscodeSubmit(event)">
-                    <div class="input-group">
-                        <input type="password" id="passcodeInput" class="passcode-input" placeholder="Enter secret passcode" autocomplete="off" required>
-                        <button type="button" class="toggle-password" onclick="togglePasscodeVisibility()" aria-label="Toggle password visibility">
-                            <svg id="eyeIcon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
-                        </button>
-                    </div>
-                    <button type="submit" class="btn-lux">
-                        <span>Unlock the Universe</span>
-                    </button>
-                    <div class="feedback-msg" id="passcodeFeedback"></div>
-                </form>
-            </article>
-
-            <!-- OPTION B: BIRTHDAY ENTRANCE -->
+            <!-- MAIN BIRTHDAY ENTRANCE CARD -->
             <article class="card-panel">
                 <div>
                     <div class="card-icon-header">
@@ -829,6 +857,39 @@
 
         </section>
     </main>
+
+    <!-- SECRET PASSCODE MODAL POPUP -->
+    <div class="secret-modal-overlay" id="secretModalOverlay">
+        <div class="secret-modal-card">
+            <button class="modal-close-btn" onclick="togglePasscodeModal(false)">&times;</button>
+            <div class="card-icon-header" style="justify-content: flex-start;">
+                <div class="card-icon">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                    </svg>
+                </div>
+                <h2 class="card-title">Secret Entrance</h2>
+            </div>
+            <p class="card-desc" style="text-align: left; margin-bottom: 1.2rem;">Enter your passcode to inspect and preview the experience.</p>
+            
+            <form class="passcode-form" id="passcodeForm" onsubmit="handlePasscodeSubmit(event)">
+                <div class="input-group">
+                    <input type="password" id="passcodeInput" class="passcode-input" placeholder="Enter secret passcode" autocomplete="off" required>
+                    <button type="button" class="toggle-password" onclick="togglePasscodeVisibility()" aria-label="Toggle password visibility">
+                        <svg id="eyeIcon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+                <button type="submit" class="btn-lux">
+                    <span>Unlock the Universe</span>
+                </button>
+                <div class="feedback-msg" id="passcodeFeedback"></div>
+            </form>
+        </div>
+    </div>
 
     <!-- SECRET PREVIEW DASHBOARD OVERLAY -->
     <div class="dashboard-overlay" id="dashboardOverlay">
@@ -884,266 +945,276 @@
             <span class="music-sub">Atmospheric Serenade</span>
         </div>
         <button class="music-ctrl-btn" id="musicToggleBtn" onclick="toggleAudio()" aria-label="Toggle Ambient Audio">
-            <svg id="playIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="pauseIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            <svg id="playIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
         </button>
     </div>
 
-    <audio id="bgAudio" loop preload="none">
-        <source src="assets/music/main-theme.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- Web Audio API Ambient Sound Generator -->
     <script>
         /* -----------------------------------------------------------------
-           1. SECURITY & ACCESS CONTROL SYSTEM
-           ----------------------------------------------------------------- */
-        const PASSCODE_HASH = "112233"; // Secret Preview Passcode
-        const PREVIEW_KEY = "ruhi_preview_session";
-        
-        // Target Date: 12 November 2026, 00:00:00 IST (UTC+05:30)
-        const TARGET_DATE_UTC = Date.UTC(2026, 10, 12, 0, 0, 0) - (5.5 * 60 * 60 * 1000);
-
-        function isPreviewActive() {
-            return localStorage.getItem(PREVIEW_KEY) === "true";
-        }
-
-        function setPreviewMode(status) {
-            if (status) {
-                localStorage.setItem(PREVIEW_KEY, "true");
-                document.getElementById('previewBanner').style.display = 'flex';
-            } else {
-                localStorage.removeItem(PREVIEW_KEY);
-                document.getElementById('previewBanner').style.display = 'none';
-            }
-        }
-
-        function togglePasscodeVisibility() {
-            const input = document.getElementById('passcodeInput');
-            const eyeIcon = document.getElementById('eyeIcon');
-            if (input.type === "password") {
-                input.type = "text";
-                eyeIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
-            } else {
-                input.type = "password";
-                eyeIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
-            }
-        }
-
-        function handlePasscodeSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('passcodeInput');
-            const feedback = document.getElementById('passcodeFeedback');
-            const form = document.getElementById('passcodeForm');
-
-            if (input.value === PASSCODE_HASH) {
-                feedback.className = "feedback-msg success";
-                feedback.textContent = "Welcome back, Creator.";
-                setPreviewMode(true);
-                setTimeout(() => {
-                    toggleDashboard(true);
-                    feedback.textContent = "";
-                    input.value = "";
-                }, 800);
-            } else {
-                feedback.className = "feedback-msg error";
-                feedback.textContent = "That doesn't seem to be the right key. Try again.";
-                form.classList.add('shake');
-                setTimeout(() => form.classList.remove('shake'), 500);
-            }
-        }
-
-        function toggleDashboard(show) {
-            document.getElementById('dashboardOverlay').style.display = show ? 'flex' : 'none';
-        }
-
-        /* -----------------------------------------------------------------
-           2. LIVE COUNTDOWN & TIMEZONE HANDLER (Asia/Kolkata)
-           ----------------------------------------------------------------- */
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = TARGET_DATE_UTC - now;
-
-            const lockedState = document.getElementById('lockedBirthdayState');
-            const unlockedState = document.getElementById('unlockedBirthdayState');
-
-            if (distance <= 0 || isPreviewActive()) {
-                // Birthday unlocked
-                lockedState.style.display = 'none';
-                unlockedState.style.display = 'flex';
-                return true;
-            } else {
-                lockedState.style.display = 'block';
-                unlockedState.style.display = 'none';
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-                document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('cd-mins').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('cd-secs').textContent = String(seconds).padStart(2, '0');
-                return false;
-            }
-        }
-
-        /* -----------------------------------------------------------------
-           3. CINEMATIC BIRTHDAY ENTRY ANIMATION
-           ----------------------------------------------------------------- */
-        function startCinematicReveal() {
-            const overlay = document.getElementById('revealOverlay');
-            overlay.style.display = 'flex';
-            
-            // Trigger Fade In
-            setTimeout(() => { overlay.style.opacity = '1'; }, 50);
-
-            // Sequence text reveals
-            setTimeout(() => { document.getElementById('revLine1').classList.add('active'); }, 1200);
-            setTimeout(() => { document.getElementById('revLine2').classList.add('active'); }, 3200);
-            setTimeout(() => { document.getElementById('revLine3').classList.add('active'); }, 5200);
-            setTimeout(() => { document.getElementById('beginStoryBtn').classList.add('active'); }, 7000);
-        }
-
-        /* -----------------------------------------------------------------
-           4. ATMOSPHERIC CANVAS (PETALS & GOLD PARTICLES)
+           1. PARTICLES & ATMOSPHERIC CANVAS
            ----------------------------------------------------------------- */
         const canvas = document.getElementById('ambient-canvas');
         const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        let petals = [];
 
-        function resizeCanvas() {
+        let particles = [];
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-        }
+        });
 
         class Particle {
             constructor() {
                 this.reset();
             }
+
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedY = Math.random() * 0.3 + 0.1;
-                this.opacity = Math.random() * 0.5 + 0.1;
+                this.size = Math.random() * 1.8 + 0.3;
+                this.speedY = -(Math.random() * 0.3 + 0.1);
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.6 + 0.1;
+                this.fadeSpeed = Math.random() * 0.005 + 0.002;
+                this.color = Math.random() > 0.4 ? '#D8B77E' : '#B77B91';
             }
-            update() {
-                this.y -= this.speedY;
-                if (this.y < 0) this.reset();
-            }
-            draw() {
-                ctx.fillStyle = `rgba(216, 183, 126, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
 
-        class Petal {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = -20;
-                this.size = Math.random() * 8 + 6;
-                this.speedY = Math.random() * 0.8 + 0.4;
-                this.speedX = Math.random() * 0.6 - 0.3;
-                this.rotation = Math.random() * 360;
-                this.rotSpeed = Math.random() * 1 - 0.5;
-                this.opacity = Math.random() * 0.6 + 0.2;
-            }
             update() {
                 this.y += this.speedY;
-                this.x += Math.sin(this.y * 0.01) + this.speedX;
-                this.rotation += this.rotSpeed;
-                if (this.y > height + 20) this.reset();
+                this.x += this.speedX;
+
+                if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+                    this.reset();
+                    this.y = height + 10;
+                }
             }
+
             draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate((this.rotation * Math.PI) / 180);
-                ctx.fillStyle = `rgba(183, 123, 145, ${this.opacity})`;
                 ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.bezierCurveTo(-this.size / 2, -this.size / 2, -this.size, this.size / 3, 0, this.size);
-                ctx.bezierCurveTo(this.size, this.size / 3, this.size / 2, -this.size / 2, 0, 0);
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
                 ctx.fill();
-                ctx.restore();
+                ctx.globalAlpha = 1.0;
             }
         }
 
-        function initParticles() {
-            particles = [];
-            petals = [];
-            const particleCount = window.innerWidth < 768 ? 25 : 50;
-            const petalCount = window.innerWidth < 768 ? 8 : 16;
-            
-            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
-            for (let i = 0; i < petalCount; i++) petals.push(new Petal());
+        // Initialize particles
+        for (let i = 0; i < 45; i++) {
+            particles.push(new Particle());
         }
 
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            petals.forEach(pt => { pt.update(); pt.draw(); });
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
             requestAnimationFrame(animateCanvas);
         }
+        animateCanvas();
 
-        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
-
-        /* -----------------------------------------------------------------
-           5. CURSOR GLOW & MUSIC CONTROL
-           ----------------------------------------------------------------- */
+        /* Interactive Cursor Glow */
         const cursorGlow = document.getElementById('cursorGlow');
-        window.addEventListener('mousemove', (e) => {
-            if (cursorGlow) {
-                cursorGlow.style.left = e.clientX + 'px';
-                cursorGlow.style.top = e.clientY + 'px';
-            }
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
         });
 
-        const bgAudio = document.getElementById('bgAudio');
-        const vinylDisc = document.getElementById('vinylDisc');
-        const playIcon = document.getElementById('playIcon');
-        const pauseIcon = document.getElementById('pauseIcon');
+        /* -----------------------------------------------------------------
+           2. PASSCODE & PREVIEW MODAL SYSTEM
+           ----------------------------------------------------------------- */
+        const SECRET_PASSCODE = 'ruhi2026';
 
-        function toggleAudio() {
-            if (bgAudio.paused) {
-                bgAudio.play().then(() => {
-                    vinylDisc.classList.add('playing');
-                    playIcon.style.display = 'none';
-                    pauseIcon.style.display = 'block';
-                }).catch(err => {
-                    console.log("Audio play blocked by browser policy or file missing:", err);
-                });
-            } else {
-                bgAudio.pause();
-                vinylDisc.classList.remove('playing');
-                playIcon.style.display = 'block';
-                pauseIcon.style.display = 'none';
+        function togglePasscodeModal(show) {
+            const modal = document.getElementById('secretModalOverlay');
+            modal.style.display = show ? 'flex' : 'none';
+            if (show) {
+                document.getElementById('passcodeInput').focus();
             }
         }
 
-        /* -----------------------------------------------------------------
-           6. INITIALIZATION
-           ----------------------------------------------------------------- */
-        document.addEventListener('DOMContentLoaded', () => {
-            resizeCanvas();
-            initParticles();
-            animateCanvas();
+        function togglePasscodeVisibility() {
+            const input = document.getElementById('passcodeInput');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+            } else {
+                input.type = 'password';
+                icon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+            }
+        }
 
-            if (isPreviewActive()) {
-                setPreviewMode(true);
+        function handlePasscodeSubmit(e) {
+            e.preventDefault();
+            const val = document.getElementById('passcodeInput').value.trim();
+            const feedback = document.getElementById('passcodeFeedback');
+            const form = document.getElementById('passcodeForm');
+
+            if (val.toLowerCase() === SECRET_PASSCODE) {
+                feedback.className = 'feedback-msg success';
+                feedback.textContent = 'Access granted. Opening dashboard...';
+                
+                setTimeout(() => {
+                    togglePasscodeModal(false);
+                    document.getElementById('previewBanner').style.display = 'flex';
+                    // Unlock birthday button immediately as well
+                    document.getElementById('lockedBirthdayState').style.display = 'none';
+                    document.getElementById('unlockedBirthdayState').style.display = 'flex';
+                    toggleDashboard(true);
+                }, 600);
+            } else {
+                feedback.className = 'feedback-msg error';
+                feedback.textContent = 'Incorrect passcode. Try again.';
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 400);
+            }
+        }
+
+        function toggleDashboard(show) {
+            const overlay = document.getElementById('dashboardOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        /* -----------------------------------------------------------------
+           3. COUNTDOWN & TARGET DATE LOCK LOGIC
+              Target Date: 12 November 2026, 00:00:00 IST (UTC +5:30)
+           ----------------------------------------------------------------- */
+        // Explicitly set 12 Nov 2026 00:00:00 IST using Date.UTC offset
+        const TARGET_DATE = Date.UTC(2026, 10, 11, 18, 30, 0); // Nov 11, 18:30 UTC = Nov 12, 00:00 IST
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = TARGET_DATE - now;
+
+            if (distance <= 0) {
+                // Birthday arrived!
+                document.getElementById('lockedBirthdayState').style.display = 'none';
+                document.getElementById('unlockedBirthdayState').style.display = 'flex';
+                return;
             }
 
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-        });
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-mins').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('cd-secs').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* -----------------------------------------------------------------
+           4. CINEMATIC REVEAL ANIMATION
+           ----------------------------------------------------------------- */
+        function startCinematicReveal() {
+            const overlay = document.getElementById('revealOverlay');
+            overlay.style.display = 'flex';
+            
+            // Force reflow
+            void overlay.offsetWidth;
+            overlay.style.opacity = '1';
+
+            // Sequence timing
+            setTimeout(() => {
+                document.getElementById('revLine1').classList.add('active');
+            }, 800);
+
+            setTimeout(() => {
+                document.getElementById('revLine2').classList.add('active');
+            }, 2600);
+
+            setTimeout(() => {
+                document.getElementById('revLine3').classList.add('active');
+            }, 4400);
+
+            setTimeout(() => {
+                document.getElementById('beginStoryBtn').classList.add('active');
+            }, 6000);
+        }
+
+        /* -----------------------------------------------------------------
+           5. SYNTHESIZED AMBIENT MUSIC (WEB AUDIO API)
+           ----------------------------------------------------------------- */
+        let audioCtx = null;
+        let isPlaying = false;
+        let masterGain = null;
+        let ambientOscs = [];
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            masterGain = audioCtx.createGain();
+            masterGain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            masterGain.connect(audioCtx.destination);
+        }
+
+        function playAmbientSound() {
+            if (!audioCtx) initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            // Warm, soft romantic drone notes (F# minor chord tones)
+            const frequencies = [146.83, 220.00, 277.18, 370.00]; // D4, A4, C#5, F#5
+            
+            frequencies.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                // Slight detune for richness
+                osc.detune.setValueAtTime((idx - 1.5) * 4, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.08 / frequencies.length, audioCtx.currentTime + 3);
+
+                osc.connect(gain);
+                gain.connect(masterGain);
+                
+                osc.start();
+                ambientOscs.push({ osc, gain });
+            });
+        }
+
+        function stopAmbientSound() {
+            if (!audioCtx) return;
+            ambientOscs.forEach(item => {
+                item.gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+                setTimeout(() => item.osc.stop(), 1000);
+            });
+            ambientOscs = [];
+        }
+
+        function toggleAudio() {
+            const vinyl = document.getElementById('vinylDisc');
+            const playIcon = document.getElementById('playIcon');
+
+            if (!isPlaying) {
+                playAmbientSound();
+                isPlaying = true;
+                vinyl.classList.add('playing');
+                playIcon.innerHTML = `<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>`;
+            } else {
+                stopAmbientSound();
+                isPlaying = false;
+                vinyl.classList.remove('playing');
+                playIcon.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
+            }
+        }
     </script>
 </body>
 </html>
