@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuHi — Chapter 04: Forever Begins Here</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Dancing+Script:wght@400;600;700&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: '#171219',
+                        burgundy: '#251622',
+                        roseDeep: '#6E3048',
+                        dustyRose: '#B77B91',
+                        gold: '#D8B77E',
+                        ivory: '#F4EADF',
+                        mutedText: '#BBAEB6'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        handwriting: ['"Dancing Script"', 'cursive']
+                    },
+                    animation: {
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 4s infinite ease-in-out',
+                        'candle-flicker': 'candleFlicker 1.8s infinite ease-in-out'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(3deg)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.35', transform: 'scale(1)' },
+                            '50%': { opacity: '0.75', transform: 'scale(1.06)' }
+                        },
+                        candleFlicker: {
+                            '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+                            '50%': { opacity: '0.65', transform: 'scale(0.88)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Base Smooth Scroll & Custom Scrollbar */
+        html {
+            scroll-behavior: smooth;
+            background-color: #171219;
+            color: #F4EADF;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #171219;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6E3048;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D8B77E;
+        }
+
+        /* Glassmorphism Containers */
+        .glass-card {
+            background: rgba(37, 22, 34, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(216, 183, 126, 0.18);
+        }
+
+        .glass-card-interactive {
+            background: rgba(37, 22, 34, 0.65);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(183, 123, 145, 0.25);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card-interactive:hover {
+            border-color: rgba(216, 183, 126, 0.55);
+            box-shadow: 0 12px 35px -10px rgba(110, 48, 72, 0.45);
+        }
+
+        /* Canvas Overlays */
+        #petalCanvas, #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        #confettiCanvas {
+            z-index: 15;
+        }
+
+        /* Ambient Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6E3048, #D8B77E, #F4EADF);
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Page Transition Overlay */
+        #transition-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #171219;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Gift Box Ribbon Untie Animation */
+        @keyframes ribbonUntie {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(-10deg); }
+            100% { transform: scale(0) rotate(45deg); opacity: 0; }
+        }
+        .animate-ribbon {
+            animation: ribbonUntie 0.8s ease-in-out forwards;
+        }
+
+        /* Wish Tile Card Styles */
+        .wish-tile {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .wish-tile.opened {
+            background: rgba(110, 48, 72, 0.35);
+            border-color: #D8B77E;
+            box-shadow: 0 0 15px rgba(216, 183, 126, 0.3);
+        }
+
+        /* Parchment Texture Style */
+        .parchment-card {
+            background: radial-gradient(circle at center, rgba(37, 22, 34, 0.9), rgba(23, 18, 25, 0.97));
+            border: 1px solid rgba(216, 183, 126, 0.35);
+            box-shadow: inset 0 0 30px rgba(110, 48, 72, 0.25);
+        }
+
+        /* Candle Flame Smoke Particle */
+        .flame-out {
+            opacity: 0 !important;
+            transform: translateY(-10px) scale(0) !important;
+            transition: all 0.8s ease-out !important;
+        }
+    </style>
+</head>
+<body class="bg-midnight text-ivory font-sans antialiased overflow-x-hidden min-h-screen relative selection:bg-roseDeep selection:text-gold">
+
+    <!-- Page Entrance Overlay -->
+    <div id="transition-overlay"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Canvas Overlays for Floating Petals & Birthday Confetti -->
+    <canvas id="petalCanvas"></canvas>
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Background Ambient Glow Orbs -->
+    <div class="glow-orb bg-roseDeep/30 w-96 h-96 top-10 left-1/2 -translate-x-1/2 animate-pulse-glow"></div>
+    <div class="glow-orb bg-gold/20 w-[32rem] h-[32rem] top-[30%] -left-20"></div>
+    <div class="glow-orb bg-burgundy/70 w-[35rem] h-[35rem] top-[65%] -right-20"></div>
+
+    <!-- HEADER / BRANDING & NAVIGATION -->
+    <header class="fixed top-0 left-0 w-full z-40 px-4 sm:px-8 py-4 flex items-center justify-between glass-card border-b border-gold/10 backdrop-blur-md">
+        <!-- RuHi Branding -->
+        <a href="index.html" onclick="navigateTo(event, 'index.html')" class="group flex items-center gap-3 focus:outline-none">
+            <span class="w-8 h-8 rounded-full border border-gold/40 flex items-center justify-center text-gold text-xs font-serif transition-transform group-hover:scale-110">R</span>
+            <div class="flex flex-col">
+                <span class="font-serif tracking-[0.2em] text-sm text-ivory group-hover:text-gold transition-colors">RUHI</span>
+                <span class="text-[9px] tracking-widest text-mutedText uppercase">A Little Universe</span>
+            </div>
+        </a>
+
+        <!-- Chapter Indicator -->
+        <div class="flex items-center gap-2 bg-roseDeep/50 border border-gold/30 px-3.5 py-1 rounded-full text-xs font-sans shadow-[0_0_15px_rgba(216,183,126,0.3)]">
+            <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
+            <span class="text-gold font-medium">CHAPTER 04</span>
+            <span class="text-mutedText">/ 04</span>
+        </div>
+
+        <!-- Navigation Controls -->
+        <nav class="flex items-center gap-2 sm:gap-4">
+            <a href="4.html" onclick="navigateTo(event, '4.html')" class="flex items-center gap-1 text-xs text-mutedText hover:text-gold transition-colors px-3 py-1.5 rounded-full hover:bg-roseDeep/20">
+                <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                <span class="hidden sm:inline">Chapter 03</span>
+                <span class="sm:hidden">Prev</span>
+            </a>
+            <a href="index.html" onclick="navigateTo(event, 'index.html')" class="flex items-center gap-1.5 text-xs bg-roseDeep/40 hover:bg-roseDeep border border-gold/30 text-gold hover:text-ivory px-3.5 py-1.5 rounded-full transition-all hover:shadow-[0_0_15px_rgba(216,183,126,0.3)]">
+                <i class="fa-solid fa-house text-[10px]"></i>
+                <span>Entrance</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- FLOATING MUSIC PLAYER -->
+    <div class="fixed bottom-6 left-6 z-40 flex items-center gap-3">
+        <button id="musicToggleBtn" class="w-12 h-12 rounded-full glass-card border border-gold/30 flex items-center justify-center text-gold hover:text-ivory hover:border-gold transition-all shadow-lg hover:scale-105 active:scale-95 focus:outline-none group">
+            <i id="musicIcon" class="fa-solid fa-music text-sm group-hover:rotate-12 transition-transform"></i>
+        </button>
+        <div id="musicStatus" class="hidden sm:flex flex-col glass-card px-3 py-1.5 rounded-lg border border-gold/10 text-xs">
+            <span class="text-ivory font-serif text-[11px] font-medium">Birthday Melody</span>
+            <span id="musicStateText" class="text-[9px] text-mutedText">Click to Play Ambient</span>
+        </div>
+        <audio id="mainAudio" loop preload="none">
+            <source src="assets/music/main-theme.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="relative z-20 pt-28 pb-20 px-4 sm:px-6 max-w-5xl mx-auto flex flex-col items-center">
+
+        <!-- SECTION 1: HERO — THE FINAL CHAPTER -->
+        <section class="min-h-[85vh] flex flex-col items-center justify-center text-center py-12 relative w-full">
+            
+            <div class="mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/40 bg-roseDeep/30 backdrop-blur-sm shadow-[0_0_20px_rgba(216,183,126,0.2)]">
+                <i class="fa-solid fa-crown text-gold text-xs"></i>
+                <span class="text-xs font-serif tracking-[0.25em] text-gold uppercase">THE FINAL CHAPTER · 04 / 04</span>
+            </div>
+
+            <!-- Central Animated Crown Emblem -->
+            <div class="my-6 relative cursor-pointer group">
+                <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gradient-to-b from-roseDeep/60 to-burgundy flex items-center justify-center border-2 border-gold/50 shadow-[0_0_45px_rgba(216,183,126,0.4)] group-hover:shadow-[0_0_60px_rgba(216,183,126,0.6)] transition-all duration-700">
+                    <i class="fa-solid fa-cake-candles text-4xl sm:text-5xl text-gold group-hover:scale-110 transition-transform animate-float-slow"></i>
+                </div>
+            </div>
+
+            <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-ivory max-w-3xl leading-tight my-4">
+                "And Here We Are..."
+            </h1>
+
+            <p class="font-sans text-base sm:text-lg text-mutedText mt-2 max-w-xl font-light leading-relaxed">
+                After all the little moments, memories, letters and things I wanted to tell you, we have finally reached the day that makes this little universe even more special.
+            </p>
+
+            <!-- Birthday Reveal Heading -->
+            <div class="mt-8 p-6 rounded-3xl border border-gold/40 bg-gradient-to-r from-roseDeep/30 via-burgundy/80 to-roseDeep/30 backdrop-blur-md max-w-2xl w-full shadow-2xl">
+                <h2 class="font-serif text-4xl sm:text-6xl text-gold font-normal tracking-wide">
+                    Happy 21st Birthday, RuHi! ✨
+                </h2>
+                <p class="font-handwriting text-2xl sm:text-3xl text-ivory mt-3">
+                    Today, the world gets another reason to celebrate you.
+                </p>
+            </div>
+
+            <div class="mt-14 animate-bounce opacity-70 hover:opacity-100 transition-opacity cursor-pointer" onclick="document.getElementById('birthday-ritual').scrollIntoView({behavior: 'smooth'})">
+                <span class="block text-[10px] tracking-widest text-mutedText uppercase mb-2 font-sans">Scroll to Make a Wish</span>
+                <i class="fa-solid fa-arrow-down-long text-gold text-sm"></i>
+            </div>
+        </section>
+
+
+        <!-- SECTION 2: BIRTHDAY CELEBRATION — 21 CANDLES RITUAL -->
+        <section id="birthday-ritual" class="w-full py-16 my-8 reveal-on-scroll flex flex-col items-center">
+            <div class="text-center mb-10">
+                <span class="text-xs font-serif tracking-[0.25em] text-dustyRose uppercase">Interactive Ritual</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-gold mt-2">Make a Birthday Wish</h2>
+                <p class="font-sans text-sm text-mutedText mt-2">21 glowing candles for 21 wonderful years.</p>
+            </div>
+
+            <!-- Cake Container -->
+            <div class="glass-card rounded-3xl p-8 sm:p-12 w-full max-w-2xl border border-gold/40 text-center flex flex-col items-center relative overflow-hidden">
+                <!-- Soft Glow Spotlight Behind Cake -->
+                <div class="absolute w-72 h-72 rounded-full bg-gold/15 blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+                <!-- SVG Birthday Cake with 21 Candles -->
+                <div class="relative w-64 h-64 sm:w-80 sm:h-80 my-4 flex items-center justify-center">
+                    <svg viewBox="0 0 300 300" class="w-full h-full drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]">
+                        <!-- Cake Stand -->
+                        <ellipse cx="150" cy="265" rx="120" ry="15" fill="#251622" stroke="#D8B77E" stroke-width="2"/>
+                        <path d="M70 265 L80 280 L220 280 L230 265 Z" fill="#171219" stroke="#D8B77E" stroke-width="1.5"/>
+
+                        <!-- Tier 1 (Bottom) -->
+                        <path d="M50 200 C50 180, 250 180, 250 200 L250 250 C250 265, 50 265, 50 250 Z" fill="#6E3048" stroke="#D8B77E" stroke-width="2"/>
+                        <!-- Frosting Details Tier 1 -->
+                        <path d="M50 200 Q75 220, 100 200 Q125 220, 150 200 Q175 220, 200 200 Q225 220, 250 200" fill="none" stroke="#F4EADF" stroke-width="3" opacity="0.8"/>
+
+                        <!-- Tier 2 (Top) -->
+                        <path d="M75 140 C75 125, 225 125, 225 140 L225 190 C225 205, 75 205, 75 190 Z" fill="#251622" stroke="#D8B77E" stroke-width="2"/>
+                        <path d="M75 140 Q105 155, 135 140 Q165 155, 195 140 Q210 150, 225 140" fill="none" stroke="#D8B77E" stroke-width="3" opacity="0.9"/>
+
+                        <!-- 21 Candles SVG Group -->
+                        <g id="candlesGroup">
+                            <!-- Injected by JavaScript dynamically for 21 precise positions -->
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Wish Controls -->
+                <div class="mt-6 space-y-4 w-full max-w-md">
+                    <button id="wishPromptBtn" onclick="triggerWishModal()" class="w-full px-8 py-3.5 rounded-full bg-gradient-to-r from-roseDeep via-burgundy to-roseDeep border border-gold/50 text-gold hover:text-ivory font-serif text-lg tracking-wide transition-all duration-300 hover:shadow-[0_0_25px_rgba(216,183,126,0.4)] active:scale-95">
+                        Make a Birthday Wish ♡
+                    </button>
+
+                    <button id="blowCandlesBtn" onclick="blowOutCandles()" class="hidden w-full px-8 py-3.5 rounded-full bg-gradient-to-r from-gold via-dustyRose to-gold border border-gold text-midnight font-serif text-lg font-medium tracking-wide transition-all duration-300 hover:shadow-[0_0_30px_rgba(216,183,126,0.6)] active:scale-95">
+                        Blow the Candles ✨
+                    </button>
+                </div>
+
+                <!-- Revealed Birthday Message -->
+                <div id="candleMessageContainer" class="max-h-0 overflow-hidden opacity-0 transition-all duration-700 ease-in-out w-full mt-6">
+                    <div class="p-6 rounded-2xl bg-burgundy/95 border border-gold/50 text-gold font-serif text-lg leading-relaxed shadow-2xl space-y-3">
+                        <i class="fa-solid fa-sparkles text-gold text-2xl"></i>
+                        <p class="text-ivory font-light italic">
+                            "May this new year of your life bring you peaceful days, unexpected happiness, beautiful opportunities and countless reasons to smile."
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- SECTION 3: BIRTHDAY MESSAGE FROM HIMMU -->
+        <section class="w-full py-16 my-8 reveal-on-scroll">
+            <div class="parchment-card rounded-3xl p-8 sm:p-12 relative overflow-hidden max-w-3xl mx-auto border border-gold/40">
+                <div class="flex items-center justify-between border-b border-gold/20 pb-4 mb-6">
+                    <div>
+                        <span class="text-xs font-serif tracking-[0.2em] text-dustyRose uppercase">A Birthday Letter</span>
+                        <h3 class="font-serif text-2xl sm:text-3xl text-gold mt-1">A Little Message, Just for You</h3>
+                    </div>
+                    <button onclick="replayBirthdayLetter()" class="text-xs text-mutedText hover:text-gold flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gold/20 hover:border-gold transition-all" title="Read Again">
+                        <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                        <span class="hidden sm:inline">Read Again</span>
+                    </button>
+                </div>
+
+                <!-- Letter Body -->
+                <div class="space-y-4 font-sans text-base sm:text-lg leading-relaxed text-ivory/95 font-light" id="birthdayLetterContainer">
+                    <p class="font-handwriting text-3xl text-gold">Dear RuHi,</p>
+                    <p class="font-serif italic text-xl text-gold/90">Happy Birthday, Sona!</p>
+                    
+                    <p class="letter-line transition-opacity duration-700">
+                        I don't know if a website can ever express everything one person wants to say to another, but I wanted to try something different this time.
+                    </p>
+                    <p class="letter-line transition-opacity duration-700">
+                        I wanted to create something that you could explore slowly — a little collection of memories, thoughts, smiles and moments that mean something to me.
+                    </p>
+                    <p class="letter-line transition-opacity duration-700">
+                        From the simplest conversations to the memories we have made, every little chapter has its own place. And somewhere along the way, you became a very special part of my everyday world.
+                    </p>
+                    <p class="letter-line transition-opacity duration-700">
+                        I hope this new year brings you closer to everything you dream of. I hope you keep discovering new things, achieving what you work for, laughing without reasons and finding happiness in the smallest moments.
+                    </p>
+                    <p class="letter-line transition-opacity duration-700 font-medium text-gold/90">
+                        Never stop being yourself. Keep growing, keep smiling and keep becoming the person you want to be.
+                    </p>
+                    <p class="letter-line transition-opacity duration-700">
+                        And whenever you revisit this little universe, I hope it reminds you of one thing: someone took the time to make all of this because your special day deserved something special.
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gold/20 flex flex-col items-end">
+                        <span class="font-serif text-xl text-ivory italic">Happy Birthday once again, Sona.</span>
+                        <span class="text-xs text-mutedText uppercase tracking-widest mt-1">With warmth and all my love,</span>
+                        <span class="font-handwriting text-3xl text-gold">Himmu ♡</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 4: 21 LITTLE WISHES FOR YOUR 21ST YEAR -->
+        <section class="w-full py-16 my-8 reveal-on-scroll">
+            <div class="text-center mb-10">
+                <span class="text-xs font-serif tracking-[0.25em] text-dustyRose uppercase">Interactive Wishes</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-gold mt-2">21 Little Wishes for Your 21st Year</h2>
+                <p class="font-sans text-sm text-mutedText mt-2">Twenty-one little wishes for a year full of beautiful possibilities.</p>
+                
+                <!-- Wish Counter & Action Toolbar -->
+                <div class="mt-6 flex items-center justify-center gap-4 flex-wrap">
+                    <span id="wishCounterBadge" class="bg-roseDeep/40 border border-gold/30 px-4 py-1.5 rounded-full text-xs font-serif text-gold">
+                        0 / 21 Wishes Discovered
+                    </span>
+                    <button onclick="revealAllWishes()" class="text-xs text-mutedText hover:text-gold px-3 py-1.5 rounded-full border border-gold/20 hover:border-gold transition-colors">
+                        Reveal All Wishes
+                    </button>
+                    <button onclick="resetWishes()" class="text-xs text-mutedText hover:text-gold px-3 py-1.5 rounded-full border border-gold/20 hover:border-gold transition-colors">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- 21 Wishes Grid Container -->
+            <div id="wishesGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3 sm:gap-4 max-w-5xl mx-auto px-2">
+                <!-- 21 Dynamic wish cards injected by JS -->
+            </div>
+        </section>
+
+
+        <!-- SECTION 5: ONE LAST LITTLE SURPRISE — GIFT BOX -->
+        <section class="w-full py-16 my-8 reveal-on-scroll flex flex-col items-center">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 w-full max-w-xl border border-gold/40 text-center flex flex-col items-center">
+                <span class="text-xs font-serif tracking-[0.2em] text-gold uppercase mb-2">Unexpected Moment</span>
+                <h3 class="font-serif text-2xl sm:text-3xl text-ivory mb-2">One Last Little Surprise</h3>
+                <p class="text-xs text-mutedText font-sans mb-6">Because a birthday deserves at least one unexpected moment.</p>
+
+                <!-- Gift Box Icon -->
+                <div id="finalGiftBox" class="w-24 h-24 rounded-2xl bg-gradient-to-b from-burgundy to-roseDeep border-2 border-gold flex items-center justify-center text-gold text-4xl shadow-[0_0_30px_rgba(216,183,126,0.4)] my-4 cursor-pointer transition-transform hover:scale-110 relative" onclick="openFinalGift()">
+                    <i id="finalGiftRibbon" class="fa-solid fa-gift"></i>
+                </div>
+
+                <button id="openFinalGiftBtn" onclick="openFinalGift()" class="mt-4 px-8 py-3 rounded-full bg-gradient-to-r from-roseDeep via-burgundy to-roseDeep border border-gold/50 text-gold hover:text-ivory font-serif text-base tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(216,183,126,0.4)] active:scale-95">
+                    Open Your Surprise
+                </button>
+
+                <!-- Revealed Surprise Container -->
+                <div id="finalSurpriseContainer" class="max-h-0 overflow-hidden opacity-0 transition-all duration-700 ease-in-out w-full mt-6">
+                    <div class="p-6 rounded-2xl bg-burgundy/95 border border-gold/50 text-gold font-serif text-lg leading-relaxed shadow-2xl space-y-4">
+                        <p class="text-xl text-gold font-serif">Surprise! ♡</p>
+                        <p class="italic text-ivory">
+                            "This little universe may have four chapters, but the happiness I wish for you has no page limit."
+                        </p>
+                        <div class="w-12 h-[1px] bg-gold/40 mx-auto"></div>
+                        <p class="text-gold font-medium text-base">
+                            I hope you find beautiful things waiting for you in every chapter ahead.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 6: A FINAL MEMORY — PERSONAL PHOTO REVEAL -->
+        <section class="w-full py-16 my-8 reveal-on-scroll">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 max-w-3xl mx-auto border border-gold/30 text-center">
+                <span class="text-xs font-serif tracking-[0.2em] text-dustyRose uppercase">The Keepsake</span>
+                <h3 class="font-serif text-2xl sm:text-4xl text-ivory mt-1 mb-6">One Picture. A Thousand Feelings.</h3>
+
+                <!-- Photo Frame -->
+                <div class="w-full max-w-md mx-auto h-72 sm:h-96 bg-midnight rounded-2xl border-2 border-gold/40 p-3 shadow-2xl overflow-hidden group relative cursor-pointer" onclick="openFinalPhotoModal()">
+                    <img id="finalMemoryImg" src="assets/memories/final-memory.jpg" alt="RuHi Final Memory" class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105" onerror="handleMissingFinalPhoto()">
+                    <div id="finalPhotoFallback" class="hidden w-full h-full flex-col items-center justify-center p-6 bg-roseDeep/30 text-center rounded-xl">
+                        <i class="fa-solid fa-camera-retro text-gold text-4xl mb-3"></i>
+                        <span class="font-serif text-lg text-gold">Final Memory Photo</span>
+                        <span class="text-xs text-mutedText mt-1">assets/memories/final-memory.jpg</span>
+                    </div>
+                </div>
+
+                <p class="font-handwriting text-2xl text-gold mt-6 max-w-xl mx-auto">
+                    "Some pictures are more than photographs. They quietly hold moments that words cannot fully explain."
+                </p>
+            </div>
+        </section>
+
+
+        <!-- SECTION 7: THE FINAL PROMISE — A THOUSAND TOMORROWS -->
+        <section class="w-full py-16 my-8 reveal-on-scroll">
+            <div class="text-center mb-12">
+                <span class="text-xs font-serif tracking-[0.25em] text-dustyRose uppercase">Looking Forward</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-gold mt-2">And There Are Still So Many Tomorrows...</h2>
+            </div>
+
+            <!-- Grid of 6 Tomorrow Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto px-2">
+                <div class="glass-card-interactive p-6 rounded-2xl border border-gold/30 text-center">
+                    <i class="fa-solid fa-compass text-gold text-2xl mb-3"></i>
+                    <h4 class="font-serif text-lg text-ivory">More Little Adventures</h4>
+                </div>
+
+                <div class="glass-card-interactive p-6 rounded-2xl border border-gold/30 text-center">
+                    <i class="fa-solid fa-camera text-gold text-2xl mb-3"></i>
+                    <h4 class="font-serif text-lg text-ivory">More Photographs & Memories</h4>
+                </div>
+
+                <div class="glass-card-interactive p-6 rounded-2xl border border-gold/30 text-center">
+                    <i class="fa-solid fa-comments text-gold text-2xl mb-3"></i>
+                    <h4 class="font-serif text-lg text-ivory">More Conversations That Turn Into Hours</h4>
+                </div>
+
+                <div class="glass-card-interactive p-6 rounded-2xl border border-gold/30 text-center">
+                    <i class="fa-solid fa-trophy text-gold text-2xl mb-3"></i>
+                    <h4 class="font-serif text-lg text-ivory">More Reasons to Celebrate Small Victories</h4>
+                </div>
+
+                <div class="glass-card-interactive p-6 rounded-2xl border border-gold/30 text-center">
+                    <i class="fa-solid fa-seedling text-gold text-2xl mb-3"></i>
+                    <h4 class="font-serif text-lg text-ivory">More Learning, Growing & Discovering</h4>
+                </div>
+
+                <div class="glass-card-interactive p-6 rounded-2xl border border-gold/30 text-center">
+                    <i class="fa-solid fa-sun text-gold text-2xl mb-3"></i>
+                    <h4 class="font-serif text-lg text-ivory">More Ordinary Days That Become Special</h4>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 8: THE FINAL CLOSING SCENE & POETRY -->
+        <section class="w-full py-24 my-12 reveal-on-scroll text-center relative">
+            <div class="glass-card rounded-3xl p-10 sm:p-16 max-w-3xl mx-auto border-2 border-gold/40 relative overflow-hidden shadow-2xl">
+                <!-- Glowing Rose Emblem -->
+                <div class="w-16 h-16 rounded-full bg-roseDeep/40 border border-gold/40 flex items-center justify-center text-gold text-2xl mx-auto mb-8 shadow-[0_0_25px_rgba(216,183,126,0.4)]">
+                    <i class="fa-solid fa-rose"></i>
+                </div>
+
+                <!-- Closing Poem -->
+                <div class="space-y-4 font-serif text-lg sm:text-2xl text-ivory/90 font-light leading-relaxed max-w-2xl mx-auto">
+                    <p>Some stories are not made of grand moments.</p>
+                    <p>They are made of little conversations,</p>
+                    <p class="text-gold italic">unexpected smiles,</p>
+                    <p>shared memories,</p>
+                    <p>and all the ordinary days</p>
+                    <p class="text-gold font-normal">that slowly become extraordinary.</p>
+                </div>
+
+                <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto my-8"></div>
+
+                <p class="font-sans text-sm text-mutedText max-w-md mx-auto">
+                    This little universe was created for you.<br>
+                    And no matter how many times you explore it, I hope you always find a little happiness here.
+                </p>
+
+                <h2 class="font-serif text-4xl sm:text-6xl text-gold font-normal my-8">
+                    Happy Birthday, RuHi. ♡
+                </h2>
+
+                <p class="font-handwriting text-2xl text-ivory">
+                    Keep shining. Keep smiling. Keep being you.
+                </p>
+
+                <div class="mt-8 pt-6 border-t border-gold/20 inline-block">
+                    <span class="font-handwriting text-3xl text-gold">— Himmu</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 9: FINAL NAVIGATION -->
+        <section class="w-full py-16 text-center reveal-on-scroll">
+            <div class="max-w-xl mx-auto space-y-6">
+                <h3 class="font-serif text-2xl sm:text-3xl text-ivory">
+                    You Have Reached the End of This Little Universe.
+                </h3>
+                <p class="text-sm text-mutedText font-sans">
+                    But beautiful memories are always worth revisiting.
+                </p>
+
+                <div class="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="index.html" onclick="navigateTo(event, 'index.html')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-roseDeep via-burgundy to-roseDeep border-2 border-gold/50 text-gold hover:text-ivory font-serif text-lg tracking-wider transition-all duration-500 hover:scale-105 hover:shadow-[0_0_35px_rgba(216,183,126,0.5)] active:scale-95">
+                        <i class="fa-solid fa-rotate-left text-xs mr-2"></i> Revisit Our Story
+                    </a>
+                    <a href="4.html" onclick="navigateTo(event, '4.html')" class="w-full sm:w-auto px-6 py-4 rounded-full glass-card border border-gold/30 text-mutedText hover:text-gold font-serif text-base transition-colors">
+                        <i class="fa-solid fa-chevron-left text-xs mr-2"></i> Go Back One Chapter
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- WISH PROMPT MODAL -->
+    <div id="wishModal" class="fixed inset-0 z-50 bg-midnight/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-gold/40 text-center relative shadow-2xl">
+            <button onclick="closeWishModal()" class="absolute top-4 right-4 text-gold hover:text-ivory w-8 h-8 rounded-full border border-gold/20 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <i class="fa-solid fa-wand-magic-sparkles text-gold text-3xl mb-4"></i>
+            <h3 class="font-serif text-2xl text-ivory font-medium mb-3">Make Your Birthday Wish</h3>
+            <p class="font-serif italic text-lg text-gold/90 mb-6">
+                "Close your eyes for a moment and make a little wish."
+            </p>
+            <button onclick="confirmWish()" class="px-8 py-3 rounded-full bg-roseDeep border border-gold text-gold hover:text-ivory text-sm font-serif">
+                I've Made My Wish ♡
+            </button>
+        </div>
+    </div>
+
+
+    <!-- WISH TILE DETAIL MODAL -->
+    <div id="wishTileModal" class="fixed inset-0 z-50 bg-midnight/95 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-gold/40 text-center relative shadow-2xl">
+            <button onclick="closeWishTileModal()" class="absolute top-4 right-4 text-gold hover:text-ivory w-8 h-8 rounded-full border border-gold/20 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span id="wishTileNumber" class="text-xs font-serif tracking-widest text-gold uppercase block mb-2">Wish #01</span>
+            <p id="wishTileText" class="font-serif text-xl sm:text-2xl text-ivory italic leading-relaxed my-4"></p>
+            <button onclick="closeWishTileModal()" class="mt-4 px-6 py-2 rounded-full bg-roseDeep border border-gold/30 text-gold text-xs uppercase tracking-wider">
+                Keep Exploring
+            </button>
+        </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer class="w-full border-t border-gold/10 py-8 text-center relative z-20 glass-card">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-mutedText">
+            <div class="flex items-center gap-2 font-serif">
+                <span class="text-gold">RuHi Universe</span>
+                <span>•</span>
+                <span>Chapter 04 of 04</span>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <a href="4.html" onclick="navigateTo(event, '4.html')" class="hover:text-gold transition-colors">
+                    <i class="fa-solid fa-chevron-left text-[10px] mr-1"></i> Chapter 03
+                </a>
+                <a href="index.html" onclick="navigateTo(event, 'index.html')" class="hover:text-gold transition-colors">
+                    Entrance <i class="fa-solid fa-house text-[10px] ml-1"></i>
+                </a>
+            </div>
+
+            <div class="text-[10px] text-mutedText/60">
+                Made with love by Himmu
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* --------------------------------------------------
+         * 1. ACCESS CONTROL & SESSION VERIFICATION
+         * -------------------------------------------------- */
+        (function checkAccess() {
+            const isUnlocked = localStorage.getItem('ruhi_unlocked') || sessionStorage.getItem('ruhi_unlocked');
+            if (!isUnlocked) {
+                sessionStorage.setItem('ruhi_unlocked', 'true');
+            }
+        })();
+
+
+        /* --------------------------------------------------
+         * 2. SMOOTH PAGE TRANSITIONS
+         * -------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('transition-overlay');
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+            }, 100);
+            renderCandles();
+            renderWishesGrid();
+        });
+
+        function navigateTo(event, url) {
+            event.preventDefault();
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.opacity = '1';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 750);
+        }
+
+
+        /* --------------------------------------------------
+         * 3. SCROLL PROGRESS & REVEAL OBSERVER
+         * -------------------------------------------------- */
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.id === 'birthday-ritual') {
+                        triggerConfettiOnce();
+                    }
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => observer.observe(el));
+
+
+        /* --------------------------------------------------
+         * 4. 21 CANDLES RENDER & BLOWOUT SYSTEM
+         * -------------------------------------------------- */
+        function renderCandles() {
+            const group = document.getElementById('candlesGroup');
+            group.innerHTML = '';
+
+            // Render 21 Candles spread nicely on tier 2 top ellipse
+            for (let i = 0; i < 21; i++) {
+                const angle = (i / 20) * Math.PI - Math.PI / 2;
+                const x = 150 + Math.cos(angle) * 65;
+                const y = 140 + Math.sin(angle) * 12;
+
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'candle-item');
+                g.innerHTML = `
+                    <rect x="${x - 2}" y="${y - 20}" width="4" height="20" rx="1" fill="#F4EADF" stroke="#D8B77E" stroke-width="0.5"/>
+                    <line x1="${x}" y1="${y - 20}" x2="${x}" y2="${y - 24}" stroke="#171219" stroke-width="1"/>
+                    <ellipse class="candle-flame animate-candle-flicker" cx="${x}" cy="${y - 28}" rx="3.5" ry="6" fill="#D8B77E" opacity="0.95"/>
+                `;
+                group.appendChild(g);
+            }
+        }
+
+        function triggerWishModal() {
+            document.getElementById('wishModal').classList.remove('hidden');
+        }
+
+        function closeWishModal() {
+            document.getElementById('wishModal').classList.add('hidden');
+        }
+
+        function confirmWish() {
+            closeWishModal();
+            document.getElementById('wishPromptBtn').classList.add('hidden');
+            document.getElementById('blowCandlesBtn').classList.remove('hidden');
+        }
+
+        function blowOutCandles() {
+            const flames = document.querySelectorAll('.candle-flame');
+            flames.forEach((flame, idx) => {
+                setTimeout(() => {
+                    flame.classList.add('flame-out');
+                }, idx * 30);
+            });
+
+            setTimeout(() => {
+                const container = document.getElementById('candleMessageContainer');
+                container.style.maxHeight = '200px';
+                container.style.opacity = '1';
+                document.getElementById('blowCandlesBtn').innerText = "Candles Blown ✨";
+                document.getElementById('blowCandlesBtn').disabled = true;
+                document.getElementById('blowCandlesBtn').classList.add('opacity-70');
+            }, 800);
+        }
+
+
+        /* --------------------------------------------------
+         * 5. 21 LITTLE WISHES DATA & INTERACTION SYSTEM
+         * -------------------------------------------------- */
+        const wishesData = [
+            "May you always find reasons to smile.",
+            "May your hard work bring you beautiful results.",
+            "May your dreams feel closer every day.",
+            "May you discover places that take your breath away.",
+            "May you always have people who genuinely care.",
+            "May your confidence grow with every new experience.",
+            "May you never lose your curiosity.",
+            "May ordinary days surprise you with happiness.",
+            "May you find peace even on difficult days.",
+            "May every new challenge make you stronger.",
+            "May you keep creating memories worth remembering.",
+            "May you always feel proud of how far you have come.",
+            "May your kindness return to you in beautiful ways.",
+            "May you get opportunities you never expected.",
+            "May your laughter always come easily.",
+            "May you keep learning things that excite you.",
+            "May your favourite little dreams come true.",
+            "May you always make time for yourself.",
+            "May the coming year bring wonderful surprises.",
+            "May you feel appreciated for exactly who you are.",
+            "And may this year become one of your most beautiful chapters yet."
+        ];
+
+        const openedWishes = new Set();
+
+        function renderWishesGrid() {
+            const grid = document.getElementById('wishesGrid');
+            grid.innerHTML = '';
+
+            wishesData.forEach((wish, idx) => {
+                const tile = document.createElement('button');
+                const isOpened = openedWishes.has(idx);
+
+                tile.className = `wish-tile p-3 sm:p-4 rounded-xl border flex flex-col items-center justify-center font-serif text-center cursor-pointer transition-all ${isOpened ? 'opened' : 'glass-card hover:border-gold border-gold/30'}`;
+                tile.onclick = () => openWishTile(idx);
+
+                tile.innerHTML = `
+                    <span class="text-xs text-gold font-bold mb-1">#${(idx + 1).toString().padStart(2, '0')}</span>
+                    <i class="fa-solid ${isOpened ? 'fa-star text-gold' : 'fa-sparkles text-dustyRose'} text-sm"></i>
+                `;
+                grid.appendChild(tile);
+            });
+
+            updateWishCounter();
+        }
+
+        function openWishTile(idx) {
+            openedWishes.add(idx);
+            renderWishesGrid();
+
+            document.getElementById('wishTileNumber').innerText = `Wish #${(idx + 1).toString().padStart(2, '0')}`;
+            document.getElementById('wishTileText').innerText = `"${wishesData[idx]}"`;
+            document.getElementById('wishTileModal').classList.remove('hidden');
+        }
+
+        function closeWishTileModal() {
+            document.getElementById('wishTileModal').classList.add('hidden');
+        }
+
+        function revealAllWishes() {
+            for (let i = 0; i < wishesData.length; i++) openedWishes.add(i);
+            renderWishesGrid();
+        }
+
+        function resetWishes() {
+            openedWishes.clear();
+            renderWishesGrid();
+        }
+
+        function updateWishCounter() {
+            document.getElementById('wishCounterBadge').innerText = `${openedWishes.size} / 21 Wishes Discovered`;
+        }
+
+
+        /* --------------------------------------------------
+         * 6. REPLAY BIRTHDAY LETTER ANIMATION
+         * -------------------------------------------------- */
+        function replayBirthdayLetter() {
+            const lines = document.querySelectorAll('#birthdayLetterContainer .letter-line');
+            lines.forEach((line, idx) => {
+                line.style.opacity = '0';
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                }, 200 * idx);
+            });
+        }
+
+
+        /* --------------------------------------------------
+         * 7. FINAL GIFT BOX SURPRISE
+         * -------------------------------------------------- */
+        let isFinalGiftOpened = false;
+        function openFinalGift() {
+            if (isFinalGiftOpened) return;
+            isFinalGiftOpened = true;
+
+            const ribbon = document.getElementById('finalGiftRibbon');
+            const giftBox = document.getElementById('finalGiftBox');
+            const container = document.getElementById('finalSurpriseContainer');
+            const btn = document.getElementById('openFinalGiftBtn');
+
+            ribbon.classList.add('animate-ribbon');
+
+            setTimeout(() => {
+                giftBox.innerHTML = `<i class="fa-solid fa-gift-open text-gold text-4xl"></i>`;
+                container.style.maxHeight = '300px';
+                container.style.opacity = '1';
+                btn.innerText = "Surprise Unlocked ✨";
+                btn.disabled = true;
+                btn.classList.add('opacity-70');
+            }, 600);
+        }
+
+
+        /* --------------------------------------------------
+         * 8. PHOTO FALLBACK HANDLING
+         * -------------------------------------------------- */
+        function handleMissingFinalPhoto() {
+            document.getElementById('finalMemoryImg').style.display = 'none';
+            document.getElementById('finalPhotoFallback').style.display = 'flex';
+        }
+
+        function openFinalPhotoModal() {
+            // Lightbox functionality if photo is available
+        }
+
+
+        /* --------------------------------------------------
+         * 9. SINGLE TRIGGER CONFETTI ANIMATION
+         * -------------------------------------------------- */
+        let confettiTriggered = false;
+        function triggerConfettiOnce() {
+            if (confettiTriggered) return;
+            confettiTriggered = true;
+
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const pieces = [];
+            const colors = ['#D8B77E', '#6E3048', '#B77B91', '#F4EADF'];
+
+            for (let i = 0; i < 70; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: -10,
+                    size: 4 + Math.random() * 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: 2 + Math.random() * 3,
+                    speedX: (Math.random() - 0.5) * 2,
+                    opacity: 1
+                });
+            }
+
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let active = false;
+
+                pieces.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.opacity -= 0.005;
+
+                    if (p.opacity > 0) {
+                        active = true;
+                        ctx.globalAlpha = p.opacity;
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(p.x, p.y, p.size, p.size);
+                    }
+                });
+
+                if (active) requestAnimationFrame(animateConfetti);
+            }
+            animateConfetti();
+        }
+
+
+        /* --------------------------------------------------
+         * 10. FLOATING PETALS CANVAS
+         * -------------------------------------------------- */
+        const petalCanvas = document.getElementById('petalCanvas');
+        const pCtx = petalCanvas.getContext('2d');
+
+        let pWidth = petalCanvas.width = window.innerWidth;
+        let pHeight = petalCanvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            pWidth = petalCanvas.width = window.innerWidth;
+            pHeight = petalCanvas.height = window.innerHeight;
+        });
+
+        const petals = [];
+        for (let i = 0; i < 24; i++) {
+            petals.push({
+                x: Math.random() * pWidth,
+                y: Math.random() * pHeight,
+                size: 5 + Math.random() * 7,
+                speedY: 0.5 + Math.random() * 1,
+                speedX: Math.sin(Math.random() * Math.PI) * 0.6,
+                rotation: Math.random() * 360,
+                color: Math.random() > 0.4 ? '#6E3048' : '#B77B91',
+                opacity: 0.3 + Math.random() * 0.4
+            });
+        }
+
+        function animatePetals() {
+            pCtx.clearRect(0, 0, pWidth, pHeight);
+            petals.forEach(p => {
+                p.y += p.speedY;
+                p.x += Math.sin(p.y * 0.01) * 0.4 + p.speedX;
+                if (p.y > pHeight + 20) p.y = -20;
+
+                pCtx.save();
+                pCtx.translate(p.x, p.y);
+                pCtx.rotate((p.rotation * Math.PI) / 180);
+                pCtx.globalAlpha = p.opacity;
+                pCtx.beginPath();
+                pCtx.moveTo(0, 0);
+                pCtx.bezierCurveTo(-p.size, -p.size / 2, -p.size, p.size, 0, p.size * 1.5);
+                pCtx.bezierCurveTo(p.size, p.size, p.size, -p.size / 2, 0, 0);
+                pCtx.fillStyle = p.color;
+                pCtx.fill();
+                pCtx.restore();
+            });
+            requestAnimationFrame(animatePetals);
+        }
+        animatePetals();
+
+
+        /* --------------------------------------------------
+         * 11. MUSIC PLAYER LOGIC (AUDIO + SYNTH FALLBACK)
+         * -------------------------------------------------- */
+        const musicToggleBtn = document.getElementById('musicToggleBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        const musicStateText = document.getElementById('musicStateText');
+        const mainAudio = document.getElementById('mainAudio');
+        
+        let isPlaying = false;
+        let audioCtx = null;
+        let synthInterval = null;
+
+        function playSynthFallback() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const notes = [261.63, 329.63, 392.00, 523.25, 440.00];
+            let noteIdx = 0;
+
+            synthInterval = setInterval(() => {
+                if (!isPlaying) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(notes[noteIdx % notes.length], audioCtx.currentTime);
+
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.04, audioCtx.currentTime + 1);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.8);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 4);
+                noteIdx++;
+            }, 2400);
+        }
+
+        musicToggleBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                mainAudio.play().then(() => {
+                    musicIcon.className = "fa-solid fa-volume-high text-gold animate-pulse";
+                    musicStateText.innerText = "Playing Audio";
+                }).catch(() => {
+                    playSynthFallback();
+                    musicIcon.className = "fa-solid fa-volume-high text-gold animate-pulse";
+                    musicStateText.innerText = "Playing Atmosphere";
+                });
+            } else {
+                mainAudio.pause();
+                if (synthInterval) clearInterval(synthInterval);
+                musicIcon.className = "fa-solid fa-music text-sm";
+                musicStateText.innerText = "Click to Play Ambient";
+            }
+        });
+    </script>
+</body>
+</html>
