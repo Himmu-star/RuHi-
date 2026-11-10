@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>RuHi — A Little Universe Made Just for You</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="A private romantic digital experience created for RuHi (Rupali).">
+    <meta name="theme-color" content="#171219">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@200;300;400;500;600&family=Sacramento&display=swap" rel="stylesheet">
+
+    <!-- CSS Styles -->
+    <style>
+        /* -----------------------------------------------------------------
+           1. DESIGN TOKENS & RESET
+           ----------------------------------------------------------------- */
+        :root {
+            --bg-primary: #171219;
+            --bg-secondary: #251622;
+            --burgundy: #6E3048;
+            --dusty-rose: #B77B91;
+            --champagne-gold: #D8B77E;
+            --gold-glow: rgba(216, 183, 126, 0.25);
+            --soft-ivory: #F4EADF;
+            --muted-text: #BBAEB6;
+            
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-script: 'Sacramento', cursive;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-lux: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(110, 48, 72, 0.2);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary);
+            color: var(--soft-ivory);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Safe area support for notch screens */
+        body {
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--burgundy);
+            color: var(--champagne-gold);
+        }
+
+        /* -----------------------------------------------------------------
+           2. ATMOSPHERIC CANVAS & LIGHTING
+           ----------------------------------------------------------------- */
+        #ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .radial-light {
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vw;
+            max-width: 800px;
+            max-height: 800px;
+            background: radial-gradient(circle, rgba(110, 48, 72, 0.25) 0%, rgba(23, 18, 25, 0) 70%);
+            z-index: 2;
+            pointer-events: none;
+            animation: pulseLight 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseLight {
+            0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.95); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.85);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* Subtle Cursor Glow (Desktop Only) */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(216, 183, 126, 0.08) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 4;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            display: none;
+        }
+        @media (min-width: 1024px) {
+            .cursor-glow { display: block; }
+        }
+
+        /* -----------------------------------------------------------------
+           3. CONTAINER & TYPOGRAPHY
+           ----------------------------------------------------------------- */
+        .main-wrapper {
+            position: relative;
+            z-index: 5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .hero-header {
+            text-align: center;
+            max-width: 750px;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInHeader 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+        }
+
+        @keyframes fadeInHeader {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge-subtle {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--champagne-gold);
+            margin-bottom: 1rem;
+            display: inline-block;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .main-title {
+            font-family: var(--font-serif);
+            font-size: clamp(3.5rem, 10vw, 6.5rem);
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            line-height: 1;
+            color: var(--soft-ivory);
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--soft-ivory) 50%, var(--champagne-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .tagline {
+            font-family: var(--font-serif);
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            font-style: italic;
+            color: var(--dusty-rose);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .secondary-line {
+            font-size: clamp(0.9rem, 2vw, 1.05rem);
+            color: var(--muted-text);
+            max-width: 520px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.6;
+        }
+
+        .gold-divider {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
+            margin: 0 auto;
+        }
+
+        /* -----------------------------------------------------------------
+           4. ACCESS OPTIONS CONTAINER & CARDS
+           ----------------------------------------------------------------- */
+        .cards-container {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInCards 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
+        }
+
+        @media (min-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @keyframes fadeInCards {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-panel {
+            background: rgba(37, 22, 34, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(216, 183, 126, 0.15);
+            border-radius: 16px;
+            padding: 2.25rem 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-lux);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(216, 183, 126, 0.3), transparent);
+        }
+
+        .card-panel:hover {
+            border-color: rgba(216, 183, 126, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(183, 123, 145, 0.15);
+        }
+
+        .card-icon-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(110, 48, 72, 0.4);
+            border: 1px solid rgba(216, 183, 126, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--champagne-gold);
+            font-size: 1rem;
+        }
+
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: var(--soft-ivory);
+            font-weight: 500;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--muted-text);
+            margin-bottom: 1.75rem;
+            line-height: 1.5;
+        }
+
+        /* -----------------------------------------------------------------
+           5. FORMS & INPUTS (OPTION A)
+           ----------------------------------------------------------------- */
+        .passcode-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .passcode-input {
+            width: 100%;
+            padding: 0.9rem 2.8rem 0.9rem 1.1rem;
+            background: rgba(23, 18, 25, 0.7);
+            border: 1px solid rgba(187, 174, 182, 0.25);
+            border-radius: 8px;
+            color: var(--soft-ivory);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            letter-spacing: 0.1em;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .passcode-input:focus {
+            border-color: var(--champagne-gold);
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--muted-text);
+            cursor: pointer;
+            padding: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: var(--champagne-gold);
+        }
+
+        .btn-lux {
+            width: 100%;
+            padding: 0.95rem 1.5rem;
+            background: linear-gradient(135deg, var(--burgundy) 0%, #4A1E2F 100%);
+            border: 1px solid rgba(216, 183, 126, 0.4);
+            border-radius: 8px;
+            color: var(--soft-ivory);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-lux:hover {
+            background: linear-gradient(135deg, #873B5A 0%, var(--burgundy) 100%);
+            border-color: var(--champagne-gold);
+            box-shadow: 0 6px 20px rgba(216, 183, 126, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .btn-lux:active {
+            transform: translateY(0);
+        }
+
+        .feedback-msg {
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            min-height: 1.2rem;
+            transition: var(--transition-smooth);
+            text-align: center;
+        }
+        .feedback-msg.error { color: #E57373; }
+        .feedback-msg.success { color: #81C784; }
+
+        /* Shake animation for incorrect password */
+        .shake {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* -----------------------------------------------------------------
+           6. LIVE COUNTDOWN & BIRTHDAY ENTRANCE (OPTION B)
+           ----------------------------------------------------------------- */
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .count-box {
+            background: rgba(23, 18, 25, 0.7);
+            border: 1px solid rgba(216, 183, 126, 0.15);
+            border-radius: 8px;
+            padding: 0.75rem 0.25rem;
+            text-align: center;
+        }
+
+        .count-num {
+            font-family: var(--font-serif);
+            font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+            font-weight: 500;
+            color: var(--champagne-gold);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .count-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted-text);
+        }
+
+        .birthday-unlocked-container {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-gold-glow {
+            background: linear-gradient(135deg, var(--champagne-gold) 0%, #B59355 100%);
+            color: #171219;
+            font-weight: 600;
+            border: none;
+        }
+        .btn-gold-glow:hover {
+            background: linear-gradient(135deg, #EAD09D 0%, var(--champagne-gold) 100%);
+            box-shadow: 0 0 25px rgba(216, 183, 126, 0.5);
+        }
+
+        /* -----------------------------------------------------------------
+           7. SECRET PREVIEW DASHBOARD (OVERLAY & PREVIEW MODE)
+           ----------------------------------------------------------------- */
+        .preview-banner {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(110, 48, 72, 0.9);
+            border: 1px solid var(--champagne-gold);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--champagne-gold);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .preview-indicator-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--champagne-gold);
+            box-shadow: 0 0 8px var(--champagne-gold);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .dashboard-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 12, 18, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .dashboard-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--champagne-gold);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-lux);
+        }
+
+        .page-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .page-link-btn {
+            background: rgba(23, 18, 25, 0.8);
+            border: 1px solid rgba(216, 183, 126, 0.2);
+            color: var(--soft-ivory);
+            padding: 0.75rem 0.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .page-link-btn span {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: var(--champagne-gold);
+        }
+
+        .page-link-btn:hover {
+            border-color: var(--champagne-gold);
+            background: var(--burgundy);
+            transform: translateY(-2px);
+        }
+
+        /* -----------------------------------------------------------------
+           8. CINEMATIC BIRTHDAY REVEAL OVERLAY
+           ----------------------------------------------------------------- */
+        .cinematic-reveal-overlay {
+            position: fixed;
+            inset: 0;
+            background: #0D090E;
+            z-index: 300;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .glowing-arch {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            border: 1px solid rgba(216, 183, 126, 0.15);
+            box-shadow: 0 0 80px rgba(216, 183, 126, 0.12);
+            pointer-events: none;
+            animation: pulseArch 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseArch {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 0.9; }
+        }
+
+        .reveal-text-line {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--soft-ivory);
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 1rem;
+            max-width: 700px;
+            font-weight: 300;
+        }
+
+        .reveal-text-line.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-text-line.highlight {
+            color: var(--champagne-gold);
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            font-weight: 400;
+        }
+
+        .begin-story-btn {
+            margin-top: 2rem;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s ease 0.5s;
+            pointer-events: none;
+        }
+
+        .begin-story-btn.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        /* -----------------------------------------------------------------
+           9. MUSIC PLAYER WIDGET
+           ----------------------------------------------------------------- */
+        .music-widget {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 90;
+            background: rgba(37, 22, 34, 0.8);
+            border: 1px solid rgba(216, 183, 126, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 0.5rem 0.9rem 0.5rem 0.6rem;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: var(--transition-smooth);
+        }
+
+        .music-widget:hover {
+            border-color: rgba(216, 183, 126, 0.4);
+        }
+
+        .vinyl-disc {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #333 30%, #111 70%);
+            border: 1px solid var(--champagne-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 4s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .vinyl-disc.playing {
+            animation-play-state: running;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .vinyl-inner {
+            width: 10px;
+            height: 10px;
+            background: var(--burgundy);
+            border-radius: 50%;
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .music-title {
+            font-size: 0.72rem;
+            color: var(--soft-ivory);
+            font-weight: 500;
+        }
+
+        .music-sub {
+            font-size: 0.62rem;
+            color: var(--muted-text);
+        }
+
+        .music-ctrl-btn {
+            background: none;
+            border: none;
+            color: var(--champagne-gold);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* -----------------------------------------------------------------
+           10. ACCESSIBILITY & RESPONSIVE ADJUSTMENTS
+           ----------------------------------------------------------------- */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            #ambient-canvas { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .main-wrapper { padding: 1.5rem 1rem; }
+            .card-panel { padding: 1.75rem 1.25rem; }
+            .music-widget { bottom: 1rem; right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Atmospheric Lighting & Vignette -->
+    <div class="radial-light"></div>
+    <div class="vignette"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Discreet Preview Mode Indicator (Shown after password entry) -->
+    <div class="preview-banner" id="previewBanner">
+        <div class="preview-indicator-dot"></div>
+        <span>PREVIEW MODE ACTIVE</span>
+        <button onclick="toggleDashboard(true)" style="background:none; border:none; color:var(--soft-ivory); cursor:pointer; text-decoration:underline; font-size:0.7rem; margin-left:0.5rem;">[ Menu ]</button>
+    </div>
+
+    <!-- MAIN PAGE WRAPPER -->
+    <main class="main-wrapper">
+        
+        <!-- Hero Header -->
+        <header class="hero-header">
+            <span class="badge-subtle">A Private Little World</span>
+            <h1 class="main-title">RuHi</h1>
+            <p class="tagline">“A Little Universe Made Just for You.”</p>
+            <p class="secondary-line">Some stories are too beautiful to be kept in ordinary pages.</p>
+            <div class="gold-divider"></div>
+        </header>
+
+        <!-- Access Cards Section -->
+        <section class="cards-container">
+
+            <!-- OPTION A: SECRET PREVIEW -->
+            <article class="card-panel">
+                <div>
+                    <div class="card-icon-header">
+                        <div class="card-icon">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                            </svg>
+                        </div>
+                        <h2 class="card-title">Secret Entrance</h2>
+                    </div>
+                    <p class="card-desc">A private passageway reserved for the creator to preview and inspect the universe ahead of time.</p>
+                </div>
+
+                <form class="passcode-form" id="passcodeForm" onsubmit="handlePasscodeSubmit(event)">
+                    <div class="input-group">
+                        <input type="password" id="passcodeInput" class="passcode-input" placeholder="Enter secret passcode" autocomplete="off" required>
+                        <button type="button" class="toggle-password" onclick="togglePasscodeVisibility()" aria-label="Toggle password visibility">
+                            <svg id="eyeIcon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                    <button type="submit" class="btn-lux">
+                        <span>Unlock the Universe</span>
+                    </button>
+                    <div class="feedback-msg" id="passcodeFeedback"></div>
+                </form>
+            </article>
+
+            <!-- OPTION B: BIRTHDAY ENTRANCE -->
+            <article class="card-panel">
+                <div>
+                    <div class="card-icon-header">
+                        <div class="card-icon">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="card-title">Birthday Entrance</h2>
+                    </div>
+                    
+                    <!-- Locked State (Before Nov 12, 2026 IST) -->
+                    <div id="lockedBirthdayState">
+                        <p class="card-desc">This little universe is waiting for its special day. Come back when the clock strikes twelve on 12 November 2026.</p>
+                        
+                        <div class="countdown-grid">
+                            <div class="count-box">
+                                <div class="count-num" id="cd-days">00</div>
+                                <div class="count-label">Days</div>
+                            </div>
+                            <div class="count-box">
+                                <div class="count-num" id="cd-hours">00</div>
+                                <div class="count-label">Hours</div>
+                            </div>
+                            <div class="count-box">
+                                <div class="count-num" id="cd-mins">00</div>
+                                <div class="count-label">Mins</div>
+                            </div>
+                            <div class="count-box">
+                                <div class="count-num" id="cd-secs">00</div>
+                                <div class="count-label">Secs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unlocked State (At or After Nov 12, 2026 IST OR via preview) -->
+                <div class="birthday-unlocked-container" id="unlockedBirthdayState">
+                    <p class="card-desc" style="color:var(--champagne-gold);">The moment has arrived. Your universe is ready to unfold.</p>
+                    <button class="btn-lux btn-gold-glow" onclick="startCinematicReveal()">
+                        <span>Enter Your Universe ♡</span>
+                    </button>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <!-- SECRET PREVIEW DASHBOARD OVERLAY -->
+    <div class="dashboard-overlay" id="dashboardOverlay">
+        <div class="dashboard-card">
+            <span class="badge-subtle">CREATOR CONTROL</span>
+            <h2 class="main-title" style="font-size:2.5rem; margin-bottom:0.5rem;">Secret Dashboard</h2>
+            <p class="card-desc" style="margin-bottom:1.5rem;">Preview access active. Navigate directly to any chapter of RuHi's story or test the main birthday entrance.</p>
+            
+            <button class="btn-lux btn-gold-glow" style="margin-bottom:1.5rem;" onclick="toggleDashboard(false); startCinematicReveal();">
+                <span>Trigger Birthday Experience Sequence</span>
+            </button>
+
+            <div class="page-links-grid">
+                <a href="2.html" class="page-link-btn"><span>02</span>Chapter II</a>
+                <a href="3.html" class="page-link-btn"><span>03</span>Chapter III</a>
+                <a href="4.html" class="page-link-btn"><span>04</span>Chapter IV</a>
+                <a href="5.html" class="page-link-btn"><span>05</span>Chapter V</a>
+                <a href="6.html" class="page-link-btn"><span>06</span>Chapter VI</a>
+                <a href="7.html" class="page-link-btn"><span>07</span>Chapter VII</a>
+                <a href="8.html" class="page-link-btn"><span>08</span>Chapter VIII</a>
+                <a href="9.html" class="page-link-btn"><span>09</span>Chapter IX</a>
+                <a href="10.html" class="page-link-btn"><span>10</span>Chapter X</a>
+                <a href="11.html" class="page-link-btn"><span>11</span>Chapter XI</a>
+                <a href="12.html" class="page-link-btn"><span>12</span>Finale</a>
+            </div>
+
+            <button class="btn-lux" style="background:transparent; border-color:var(--muted-text);" onclick="toggleDashboard(false)">
+                <span>Return to Entrance</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- CINEMATIC BIRTHDAY REVEAL OVERLAY -->
+    <div class="cinematic-reveal-overlay" id="revealOverlay">
+        <div class="glowing-arch"></div>
+        
+        <div class="reveal-text-line" id="revLine1">Today is not just another day.</div>
+        <div class="reveal-text-line" id="revLine2">Today, the world celebrates you.</div>
+        <div class="reveal-text-line highlight" id="revLine3">Happy Birthday, RuHi.</div>
+
+        <a href="2.html" class="btn-lux btn-gold-glow begin-story-btn" id="beginStoryBtn">
+            <span>Begin Our Story &rarr;</span>
+        </a>
+    </div>
+
+    <!-- FLOATING MUSIC PLAYER -->
+    <div class="music-widget">
+        <div class="vinyl-disc" id="vinylDisc">
+            <div class="vinyl-inner"></div>
+        </div>
+        <div class="music-info">
+            <span class="music-title">RuHi — Main Theme</span>
+            <span class="music-sub">Atmospheric Serenade</span>
+        </div>
+        <button class="music-ctrl-btn" id="musicToggleBtn" onclick="toggleAudio()" aria-label="Toggle Ambient Audio">
+            <svg id="playIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+    </div>
+
+    <audio id="bgAudio" loop preload="none">
+        <source src="assets/music/main-theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* -----------------------------------------------------------------
+           1. SECURITY & ACCESS CONTROL SYSTEM
+           ----------------------------------------------------------------- */
+        const PASSCODE_HASH = "112233"; // Secret Preview Passcode
+        const PREVIEW_KEY = "ruhi_preview_session";
+        
+        // Target Date: 12 November 2026, 00:00:00 IST (UTC+05:30)
+        const TARGET_DATE_UTC = Date.UTC(2026, 10, 12, 0, 0, 0) - (5.5 * 60 * 60 * 1000);
+
+        function isPreviewActive() {
+            return localStorage.getItem(PREVIEW_KEY) === "true";
+        }
+
+        function setPreviewMode(status) {
+            if (status) {
+                localStorage.setItem(PREVIEW_KEY, "true");
+                document.getElementById('previewBanner').style.display = 'flex';
+            } else {
+                localStorage.removeItem(PREVIEW_KEY);
+                document.getElementById('previewBanner').style.display = 'none';
+            }
+        }
+
+        function togglePasscodeVisibility() {
+            const input = document.getElementById('passcodeInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+            if (input.type === "password") {
+                input.type = "text";
+                eyeIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+            } else {
+                input.type = "password";
+                eyeIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+            }
+        }
+
+        function handlePasscodeSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('passcodeInput');
+            const feedback = document.getElementById('passcodeFeedback');
+            const form = document.getElementById('passcodeForm');
+
+            if (input.value === PASSCODE_HASH) {
+                feedback.className = "feedback-msg success";
+                feedback.textContent = "Welcome back, Creator.";
+                setPreviewMode(true);
+                setTimeout(() => {
+                    toggleDashboard(true);
+                    feedback.textContent = "";
+                    input.value = "";
+                }, 800);
+            } else {
+                feedback.className = "feedback-msg error";
+                feedback.textContent = "That doesn't seem to be the right key. Try again.";
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 500);
+            }
+        }
+
+        function toggleDashboard(show) {
+            document.getElementById('dashboardOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        /* -----------------------------------------------------------------
+           2. LIVE COUNTDOWN & TIMEZONE HANDLER (Asia/Kolkata)
+           ----------------------------------------------------------------- */
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = TARGET_DATE_UTC - now;
+
+            const lockedState = document.getElementById('lockedBirthdayState');
+            const unlockedState = document.getElementById('unlockedBirthdayState');
+
+            if (distance <= 0 || isPreviewActive()) {
+                // Birthday unlocked
+                lockedState.style.display = 'none';
+                unlockedState.style.display = 'flex';
+                return true;
+            } else {
+                lockedState.style.display = 'block';
+                unlockedState.style.display = 'none';
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cd-mins').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('cd-secs').textContent = String(seconds).padStart(2, '0');
+                return false;
+            }
+        }
+
+        /* -----------------------------------------------------------------
+           3. CINEMATIC BIRTHDAY ENTRY ANIMATION
+           ----------------------------------------------------------------- */
+        function startCinematicReveal() {
+            const overlay = document.getElementById('revealOverlay');
+            overlay.style.display = 'flex';
+            
+            // Trigger Fade In
+            setTimeout(() => { overlay.style.opacity = '1'; }, 50);
+
+            // Sequence text reveals
+            setTimeout(() => { document.getElementById('revLine1').classList.add('active'); }, 1200);
+            setTimeout(() => { document.getElementById('revLine2').classList.add('active'); }, 3200);
+            setTimeout(() => { document.getElementById('revLine3').classList.add('active'); }, 5200);
+            setTimeout(() => { document.getElementById('beginStoryBtn').classList.add('active'); }, 7000);
+        }
+
+        /* -----------------------------------------------------------------
+           4. ATMOSPHERIC CANVAS (PETALS & GOLD PARTICLES)
+           ----------------------------------------------------------------- */
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let petals = [];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(216, 183, 126, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -20;
+                this.size = Math.random() * 8 + 6;
+                this.speedY = Math.random() * 0.8 + 0.4;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.6 + 0.2;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) + this.speedX;
+                this.rotation += this.rotSpeed;
+                if (this.y > height + 20) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = `rgba(183, 123, 145, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size / 2, -this.size / 2, -this.size, this.size / 3, 0, this.size);
+                ctx.bezierCurveTo(this.size, this.size / 3, this.size / 2, -this.size / 2, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            petals = [];
+            const particleCount = window.innerWidth < 768 ? 25 : 50;
+            const petalCount = window.innerWidth < 768 ? 8 : 16;
+            
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+            for (let i = 0; i < petalCount; i++) petals.push(new Petal());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            petals.forEach(pt => { pt.update(); pt.draw(); });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+
+        /* -----------------------------------------------------------------
+           5. CURSOR GLOW & MUSIC CONTROL
+           ----------------------------------------------------------------- */
+        const cursorGlow = document.getElementById('cursorGlow');
+        window.addEventListener('mousemove', (e) => {
+            if (cursorGlow) {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+            }
+        });
+
+        const bgAudio = document.getElementById('bgAudio');
+        const vinylDisc = document.getElementById('vinylDisc');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+
+        function toggleAudio() {
+            if (bgAudio.paused) {
+                bgAudio.play().then(() => {
+                    vinylDisc.classList.add('playing');
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                }).catch(err => {
+                    console.log("Audio play blocked by browser policy or file missing:", err);
+                });
+            } else {
+                bgAudio.pause();
+                vinylDisc.classList.remove('playing');
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        }
+
+        /* -----------------------------------------------------------------
+           6. INITIALIZATION
+           ----------------------------------------------------------------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            resizeCanvas();
+            initParticles();
+            animateCanvas();
+
+            if (isPreviewActive()) {
+                setPreviewMode(true);
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
