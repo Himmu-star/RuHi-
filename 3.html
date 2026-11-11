@@ -265,7 +265,7 @@
         </div>
         <!-- Shared Music Audio Fallback Element -->
         <audio id="mainAudio" loop preload="none">
-            <source src="assets/music/main-theme.mp3" type="audio/mpeg">
+            <source src="music/main-theme.mp3" type="audio/mpeg">
         </audio>
     </div>
 
@@ -297,10 +297,7 @@
                 <!-- Polaroid Frame Left -->
                 <div class="absolute left-4 sm:left-12 -rotate-12 w-32 sm:w-44 p-3 bg-burgundy/90 border border-gold/30 rounded-lg shadow-2xl transition-transform hover:scale-105 hover:z-20">
                     <div class="w-full h-24 sm:h-32 bg-midnight/80 rounded border border-gold/15 flex items-center justify-center overflow-hidden">
-                        <img src="assets/memories/a6.jpg" alt="RuHi Stack 1" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center bg-roseDeep/20">
-                            <svg class="w-8 h-8 text-dustyRose/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        </div>
+                        <img src="6.jpg" alt="RuHi Frame Left" class="w-full h-full object-cover">
                     </div>
                     <span class="font-handwriting text-xs text-gold/80 block mt-2 text-center">💝</span>
                 </div>
@@ -308,10 +305,7 @@
                 <!-- Polaroid Frame Right -->
                 <div class="absolute right-4 sm:right-12 rotate-12 w-32 sm:w-44 p-3 bg-burgundy/90 border border-gold/30 rounded-lg shadow-2xl transition-transform hover:scale-105 hover:z-20">
                     <div class="w-full h-24 sm:h-32 bg-midnight/80 rounded border border-gold/15 flex items-center justify-center overflow-hidden">
-                        <img src="assets/memories/a7.jpg" alt="RuHi Stack 2" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center bg-roseDeep/20">
-                            <svg class="w-8 h-8 text-dustyRose/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        </div>
+                        <img src="7.jpg" alt="RuHi Frame Right" class="w-full h-full object-cover">
                     </div>
                     <span class="font-handwriting text-xs text-gold/80 block mt-2 text-center">💖</span>
                 </div>
@@ -319,12 +313,7 @@
                 <!-- Central Glowing Heart Frame -->
                 <div class="z-10 w-36 sm:w-52 p-3 bg-gradient-to-b from-roseDeep/60 to-burgundy border-2 border-gold/60 rounded-xl shadow-[0_0_30px_rgba(216,183,126,0.3)] animate-float-slow">
                     <div class="w-full h-28 sm:h-36 bg-midnight/90 rounded border border-gold/30 flex flex-col items-center justify-center overflow-hidden relative">
-                        <img src="assets/memories/a8.jpg" alt="RuHi Universe Main" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-2 text-center bg-roseDeep/20">
-                            <i class="fa-solid fa-heart text-gold text-2xl mb-1 animate-pulse"></i>
-                            <span class="font-serif text-sm text-ivory">RuHi Universe</span>
-                            <span class="text-[9px] text-mutedText">Our Collection</span>
-                        </div>
+                        <img src="8.jpg" alt="RuHi Universe Main" class="w-full h-full object-cover">
                     </div>
                     <span class="font-handwriting text-sm text-gold block mt-2 text-center">💗</span>
                 </div>
@@ -482,12 +471,8 @@
                 
                 <!-- Polaroid Item 1 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer -rotate-2" onclick="openLightbox(0)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/a1.jpg" alt="Memory 01" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-camera-retro text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">a1.jpg</span>
-                        </div>
+                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 overflow-hidden relative group">
+                        <img src="1.jpg" alt="Memory 01" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="pt-3 text-center">
                         <span class="font-handwriting text-xl text-gold">🥰</span>
@@ -496,12 +481,8 @@
 
                 <!-- Polaroid Item 2 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer rotate-2" onclick="openLightbox(1)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/a2.jpg" alt="Memory 02" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-cloud-moon text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">a2.jpg</span>
-                        </div>
+                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 overflow-hidden relative group">
+                        <img src="2.jpg" alt="Memory 02" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="pt-3 text-center">
                         <span class="font-handwriting text-xl text-gold">😍</span>
@@ -510,12 +491,8 @@
 
                 <!-- Polaroid Item 3 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer -rotate-1" onclick="openLightbox(2)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/a3.jpg" alt="Memory 03" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-mug-hot text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">a3.jpg</span>
-                        </div>
+                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 overflow-hidden relative group">
+                        <img src="3.jpg" alt="Memory 03" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="pt-3 text-center">
                         <span class="font-handwriting text-xl text-gold">😘</span>
@@ -524,12 +501,8 @@
 
                 <!-- Polaroid Item 4 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer rotate-3" onclick="openLightbox(3)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/a4.jpg" alt="Memory 04" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-smile-beam text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">a4.jpg</span>
-                        </div>
+                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 overflow-hidden relative group">
+                        <img src="4.jpg" alt="Memory 04" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="pt-3 text-center">
                         <span class="font-handwriting text-xl text-gold">😙</span>
@@ -538,12 +511,8 @@
 
                 <!-- Polaroid Item 5 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer rotate-1" onclick="openLightbox(4)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/a5.jpg" alt="Memory 05" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-sparkles text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">a5.jpg</span>
-                        </div>
+                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 overflow-hidden relative group">
+                        <img src="5.jpg" alt="Memory 05" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="pt-3 text-center">
                         <span class="font-handwriting text-xl text-gold">✨</span>
@@ -673,28 +642,16 @@
 
         <div class="max-w-xl w-full glass-card p-6 rounded-2xl border border-gold/40 flex flex-col items-center text-center">
             <div id="lightboxImageContainer" class="w-full h-80 bg-midnight/80 rounded-xl border border-gold/20 flex items-center justify-center overflow-hidden mb-4">
-                <img id="lightboxImg" src="" alt="Memory" class="w-full h-full object-cover hidden">
-                <div id="lightboxFallback" class="flex flex-col items-center justify-center text-gold p-4">
-                    <i class="fa-solid fa-heart text-4xl mb-3 animate-pulse"></i>
-                    <span id="lightboxFallbackTitle" class="font-serif text-lg text-ivory">Memory Photo</span>
-                </div>
+                <img id="lightboxImg" src="" alt="Memory" class="w-full h-full object-cover">
             </div>
-            <h4 id="lightboxTitle" class="font-serif text-2xl text-gold">Memory Title</h4>
-            <p id="lightboxDesc" class="font-sans text-xs text-mutedText mt-1">Memory Caption</p>
         </div>
     </div>
 
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Memory Data for Lightbox Modal
-        const memoryData = [
-            { title: "First Time I Saw You", caption: "13 November 2022 • The day my heart skipped a beat.", img: "assets/memories/a1.jpg" },
-            { title: "First Message Sent", caption: "18 December 2022 • Small hellos that changed everything.", img: "assets/memories/a2.jpg" },
-            { title: "Your Sweet Reply", caption: "23 December 2022 • The moment I smiled at my screen.", img: "assets/memories/a3.jpg" },
-            { title: "Hours on Phone", caption: "28 March 2023 • Hearing your voice felt like home.", img: "assets/memories/a4.jpg" },
-            { title: "Our Special Bond", caption: "25 June 2024 • A promise written in the stars.", img: "assets/memories/a5.jpg" }
-        ];
+        // Memory Images for Lightbox Modal
+        const memoryImages = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"];
 
         let currentMemoryIndex = 0;
 
@@ -720,31 +677,13 @@
 
         // Navigate Lightbox
         function changeLightbox(dir) {
-            currentMemoryIndex = (currentMemoryIndex + dir + memoryData.length) % memoryData.length;
+            currentMemoryIndex = (currentMemoryIndex + dir + memoryImages.length) % memoryImages.length;
             updateLightbox();
         }
 
         function updateLightbox() {
-            const data = memoryData[currentMemoryIndex];
             const img = document.getElementById('lightboxImg');
-            const fallback = document.getElementById('lightboxFallback');
-            const title = document.getElementById('lightboxTitle');
-            const desc = document.getElementById('lightboxDesc');
-            const fallbackTitle = document.getElementById('lightboxFallbackTitle');
-
-            title.textContent = data.title;
-            desc.textContent = data.caption;
-            fallbackTitle.textContent = data.title;
-
-            img.src = data.img;
-            img.onload = () => {
-                img.classList.remove('hidden');
-                fallback.classList.add('hidden');
-            };
-            img.onerror = () => {
-                img.classList.add('hidden');
-                fallback.classList.remove('hidden');
-            };
+            img.src = memoryImages[currentMemoryIndex];
         }
 
         // Unlock Capsule Interaction
@@ -815,9 +754,7 @@
             if (isPlaying) {
                 musicIcon.className = "fa-solid fa-pause text-sm text-gold";
                 musicStateText.textContent = "Playing love theme...";
-                mainAudio.play().catch(() => {
-                    // Audio fallback if file missing
-                });
+                mainAudio.play().catch(() => {});
             } else {
                 musicIcon.className = "fa-solid fa-music text-sm text-gold";
                 musicStateText.textContent = "Sabse nyari sabse pyariii";
