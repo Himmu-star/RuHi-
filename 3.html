@@ -155,6 +155,7 @@
         /* Flip Card Styling for 3D Details */
         .flip-card {
             perspective: 1000px;
+            height: 220px;
         }
         .flip-card-inner {
             position: relative;
@@ -296,7 +297,10 @@
                 <!-- Polaroid Frame Left -->
                 <div class="absolute left-4 sm:left-12 -rotate-12 w-32 sm:w-44 p-3 bg-burgundy/90 border border-gold/30 rounded-lg shadow-2xl transition-transform hover:scale-105 hover:z-20">
                     <div class="w-full h-24 sm:h-32 bg-midnight/80 rounded border border-gold/15 flex items-center justify-center overflow-hidden">
-                        <svg class="w-8 h-8 text-dustyRose/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <img src="assets/memories/a6.jpg" alt="RuHi Stack 1" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="hidden w-full h-full flex-col items-center justify-center bg-roseDeep/20">
+                            <svg class="w-8 h-8 text-dustyRose/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
                     </div>
                     <span class="font-handwriting text-xs text-gold/80 block mt-2 text-center">💝</span>
                 </div>
@@ -304,17 +308,23 @@
                 <!-- Polaroid Frame Right -->
                 <div class="absolute right-4 sm:right-12 rotate-12 w-32 sm:w-44 p-3 bg-burgundy/90 border border-gold/30 rounded-lg shadow-2xl transition-transform hover:scale-105 hover:z-20">
                     <div class="w-full h-24 sm:h-32 bg-midnight/80 rounded border border-gold/15 flex items-center justify-center overflow-hidden">
-                        <svg class="w-8 h-8 text-dustyRose/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <img src="assets/memories/a7.jpg" alt="RuHi Stack 2" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="hidden w-full h-full flex-col items-center justify-center bg-roseDeep/20">
+                            <svg class="w-8 h-8 text-dustyRose/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
                     </div>
                     <span class="font-handwriting text-xs text-gold/80 block mt-2 text-center">💖</span>
                 </div>
 
                 <!-- Central Glowing Heart Frame -->
                 <div class="z-10 w-36 sm:w-52 p-3 bg-gradient-to-b from-roseDeep/60 to-burgundy border-2 border-gold/60 rounded-xl shadow-[0_0_30px_rgba(216,183,126,0.3)] animate-float-slow">
-                    <div class="w-full h-28 sm:h-36 bg-midnight/90 rounded border border-gold/30 flex flex-col items-center justify-center p-2 text-center">
-                        <i class="fa-solid fa-heart text-gold text-2xl mb-1 animate-pulse"></i>
-                        <span class="font-serif text-sm text-ivory">RuHi Universe</span>
-                        <span class="text-[9px] text-mutedText">Our Collection</span>
+                    <div class="w-full h-28 sm:h-36 bg-midnight/90 rounded border border-gold/30 flex flex-col items-center justify-center overflow-hidden relative">
+                        <img src="assets/memories/a8.jpg" alt="RuHi Universe Main" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="hidden w-full h-full flex-col items-center justify-center p-2 text-center bg-roseDeep/20">
+                            <i class="fa-solid fa-heart text-gold text-2xl mb-1 animate-pulse"></i>
+                            <span class="font-serif text-sm text-ivory">RuHi Universe</span>
+                            <span class="text-[9px] text-mutedText">Our Collection</span>
+                        </div>
                     </div>
                     <span class="font-handwriting text-sm text-gold block mt-2 text-center">💗</span>
                 </div>
@@ -468,133 +478,75 @@
             </div>
 
             <!-- Polaroid Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 px-2">
                 
                 <!-- Polaroid Item 1 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer -rotate-2" onclick="openLightbox(0)">
                     <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-01.jpg" alt="Memory 01" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <img src="assets/memories/a1.jpg" alt="Memory 01" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                         <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
                             <i class="fa-solid fa-camera-retro text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #01</span>
-                            <span class="text-[10px] text-mutedText mt-1">01.jpg</span>
+                            <span class="text-xs text-gold/80 font-serif">a1.jpg</span>
                         </div>
                     </div>
                     <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">🥰</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
+                        <span class="font-handwriting text-xl text-gold">🥰</span>
                     </div>
                 </div>
 
                 <!-- Polaroid Item 2 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer rotate-2" onclick="openLightbox(1)">
                     <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-02.jpg" alt="Memory 02" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <img src="assets/memories/a2.jpg" alt="Memory 02" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                         <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
                             <i class="fa-solid fa-cloud-moon text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #02</span>
-                            <span class="text-[10px] text-mutedText mt-1">02.jpg</span>
+                            <span class="text-xs text-gold/80 font-serif">a2.jpg</span>
                         </div>
                     </div>
                     <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">😍</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
+                        <span class="font-handwriting text-xl text-gold">😍</span>
                     </div>
                 </div>
 
                 <!-- Polaroid Item 3 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer -rotate-1" onclick="openLightbox(2)">
                     <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-03.jpg" alt="Memory 03" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <img src="assets/memories/a3.jpg" alt="Memory 03" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                         <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-[#D8B77E] fa-mug-hot text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #03</span>
-                            <span class="text-[10px] text-mutedText mt-1">03.jpg</span>
+                            <i class="fa-solid fa-mug-hot text-gold text-3xl mb-2"></i>
+                            <span class="text-xs text-gold/80 font-serif">a3.jpg</span>
                         </div>
                     </div>
                     <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">😘</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
+                        <span class="font-handwriting text-xl text-gold">😘</span>
                     </div>
                 </div>
 
                 <!-- Polaroid Item 4 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer rotate-3" onclick="openLightbox(3)">
                     <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-04.jpg" alt="Memory 04" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <img src="assets/memories/a4.jpg" alt="Memory 04" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                         <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
                             <i class="fa-solid fa-smile-beam text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #04</span>
-                            <span class="text-[10px] text-mutedText mt-1">04.jpg</span>
+                            <span class="text-xs text-gold/80 font-serif">a4.jpg</span>
                         </div>
                     </div>
                     <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">😙</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
+                        <span class="font-handwriting text-xl text-gold">😙</span>
                     </div>
                 </div>
 
                 <!-- Polaroid Item 5 -->
                 <div class="polaroid-card p-4 rounded-xl cursor-pointer rotate-1" onclick="openLightbox(4)">
                     <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-05.jpg" alt="Memory 05" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <img src="assets/memories/a5.jpg" alt="Memory 05" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                         <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
                             <i class="fa-solid fa-sparkles text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #05</span>
-                            <span class="text-[10px] text-mutedText mt-1">05.jpg</span>
+                            <span class="text-xs text-gold/80 font-serif">a5.jpg</span>
                         </div>
                     </div>
                     <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">🩷</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
-                    </div>
-                </div>
-
-                <!-- Polaroid Item 6 -->
-                <div class="polaroid-card p-4 rounded-xl cursor-pointer -rotate-3" onclick="openLightbox(5)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-06.jpg" alt="Memory 06" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-heart text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #06</span>
-                            <span class="text-[10px] text-mutedText mt-1">06.jpg</span>
-                        </div>
-                    </div>
-                    <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">😻</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
-                    </div>
-                </div>
-
-                <!-- Polaroid Item 7 -->
-                <div class="polaroid-card p-4 rounded-xl cursor-pointer rotate-2" onclick="openLightbox(6)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-07.jpg" alt="Memory 07" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-compass text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #07</span>
-                            <span class="text-[10px] text-mutedText mt-1">07.jpg</span>
-                        </div>
-                    </div>
-                    <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">💌</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
-                    </div>
-                </div>
-
-                <!-- Polaroid Item 8 -->
-                <div class="polaroid-card p-4 rounded-xl cursor-pointer -rotate-2" onclick="openLightbox(7)">
-                    <div class="w-full h-56 bg-midnight rounded border border-gold/20 flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="assets/memories/memory-08.jpg" alt="Memory 08" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        <div class="hidden w-full h-full flex-col items-center justify-center p-4 bg-roseDeep/20 text-center">
-                            <i class="fa-solid fa-cake-candles text-gold text-3xl mb-2"></i>
-                            <span class="text-xs text-gold/80 font-serif">Memory Photo #08</span>
-                            <span class="text-[10px] text-mutedText mt-1">08.jpg</span>
-                        </div>
-                    </div>
-                    <div class="pt-3 text-center">
-                        <span class="font-handwriting text-lg text-gold">💝</span>
-                        <span class="block text-[10px] text-mutedText uppercase tracking-widest mt-0.5">.</span>
+                        <span class="font-handwriting text-xl text-gold">✨</span>
                     </div>
                 </div>
 
@@ -602,368 +554,280 @@
         </section>
 
 
-        <!-- SECTION 4: THE LITTLE DETAILS (3D FLIP CARDS) -->
+        <!-- SECTION 4: FLIP CARDS (OUR REASONS & INSIGHTS) -->
         <section class="w-full py-16 my-8 reveal-on-scroll">
             <div class="text-center mb-12">
-                <span class="text-xs font-serif tracking-[0.25em] text-dustyRose uppercase">Nuances</span>
-                <h2 class="font-serif text-3xl sm:text-5xl text-gold mt-2">"It's Always the Little Things."</h2>
-                <p class="text-sm text-mutedText mt-2">Hover or tap any card to reveal what lies beneath.</p>
+                <span class="text-xs font-serif tracking-[0.25em] text-gold uppercase">Secrets & Notes</span>
+                <h2 class="font-serif text-3xl sm:text-4xl text-ivory mt-2">Hover or Tap to Flip</h2>
             </div>
 
-            <!-- Grid of 4 Flip Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto px-2">
-                
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Card 1 -->
-                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card">
                     <div class="flip-card-inner">
-                        <!-- Front -->
-                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-gold/30 text-center">
-                            <i class="fa-solid fa-bookmark text-gold text-2xl mb-3"></i>
-                            <h3 class="font-serif text-xl text-ivory">Hum kabhi nahi bhul sakte</h3>
-                            <span class="text-[10px] text-gold/70 tracking-widest uppercase mt-4">Tap to Flip <i class="fa-solid fa-rotate text-[9px]"></i></span>
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-gold/30">
+                            <i class="fa-solid fa-wand-magic-sparkles text-3xl text-gold mb-3"></i>
+                            <h4 class="font-serif text-xl text-ivory">Why You Are Special</h4>
+                            <span class="text-xs text-mutedText mt-2">Touch to flip</span>
                         </div>
-                        <!-- Back -->
-                        <div class="flip-card-back bg-burgundy/90 p-6 flex flex-col items-center justify-center border border-gold/50 text-center rounded-2xl shadow-xl">
-                            <p class="font-serif text-base text-gold italic leading-relaxed">
-                                "Ki iss duniya me sabse pyara jagah aapke bahon ke shiva kahin nahi hai."
+                        <div class="flip-card-back bg-gradient-to-br from-roseDeep to-burgundy p-6 flex flex-col items-center justify-center border border-gold/50 rounded-2xl">
+                            <p class="font-serif text-base text-ivory leading-relaxed">
+                                Aapki ek choti si muskaan mere poore din ko roshan kar deti hai. Aap se baat karke sab tension gayab ho jata hai.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card">
                     <div class="flip-card-inner">
-                        <!-- Front -->
-                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-gold/30 text-center">
-                            <i class="fa-solid fa-face-smile text-gold text-2xl mb-3"></i>
-                            <h3 class="font-serif text-xl text-ivory">jo mujhe humesha smile kara de</h3>
-                            <span class="text-[10px] text-gold/70 tracking-widest uppercase mt-4">Tap to Flip <i class="fa-solid fa-rotate text-[9px]"></i></span>
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-gold/30">
+                            <i class="fa-solid fa-infinity text-3xl text-gold mb-3"></i>
+                            <h4 class="font-serif text-xl text-ivory">Our Promise</h4>
+                            <span class="text-xs text-mutedText mt-2">Touch to flip</span>
                         </div>
-                        <!-- Back -->
-                        <div class="flip-card-back bg-burgundy/90 p-6 flex flex-col items-center justify-center border border-gold/50 text-center rounded-2xl shadow-xl">
-                            <p class="font-serif text-base text-gold italic leading-relaxed">
-                                "Aap wahi ho jo kisi se pyar na karna chahte the."
+                        <div class="flip-card-back bg-gradient-to-br from-roseDeep to-burgundy p-6 flex flex-col items-center justify-center border border-gold/50 rounded-2xl">
+                            <p class="font-serif text-base text-ivory leading-relaxed">
+                                Chahe halaat jo bhi hon, hum humesha aapka haath thame rahenge aur aapko sabse zyada pyaar karenge.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card">
                     <div class="flip-card-inner">
-                        <!-- Front -->
-                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-gold/30 text-center">
-                            <i class="fa-solid fa-star text-gold text-2xl mb-3"></i>
-                            <h3 class="font-serif text-xl text-ivory">Aapme khash kya hai</h3>
-                            <span class="text-[10px] text-gold/70 tracking-widest uppercase mt-4">Tap to Flip <i class="fa-solid fa-rotate text-[9px]"></i></span>
+                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-gold/30">
+                            <i class="fa-solid fa-compass text-3xl text-gold mb-3"></i>
+                            <h4 class="font-serif text-xl text-ivory">Future Dream</h4>
+                            <span class="text-xs text-mutedText mt-2">Touch to flip</span>
                         </div>
-                        <!-- Back -->
-                        <div class="flip-card-back bg-burgundy/90 p-6 flex flex-col items-center justify-center border border-gold/50 text-center rounded-2xl shadow-xl">
-                            <p class="font-serif text-base text-gold italic leading-relaxed">
-                                "Aap aap ho, aap rupali, ruhi, pali, thali, rup, bauaa, sona, buggu, wifey sab me perfect ho."
+                        <div class="flip-card-back bg-gradient-to-br from-roseDeep to-burgundy p-6 flex flex-col items-center justify-center border border-gold/50 rounded-2xl">
+                            <p class="font-serif text-base text-ivory leading-relaxed">
+                                Ek chota sa aashiyana jahan sirf hum aur aap hon, aur dher saari khushiyan aur moments hon!
                             </p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 4 -->
-                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <!-- Front -->
-                        <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-gold/30 text-center">
-                            <i class="fa-solid fa-clock-rotate-left text-gold text-2xl mb-3"></i>
-                            <h3 class="font-serif text-xl text-ivory">Ek din jo hum har din jee sakte hai</h3>
-                            <span class="text-[10px] text-gold/70 tracking-widest uppercase mt-4">Tap to Flip <i class="fa-solid fa-rotate text-[9px]"></i></span>
-                        </div>
-                        <!-- Back -->
-                        <div class="flip-card-back bg-burgundy/90 p-6 flex flex-col items-center justify-center border border-gold/50 text-center rounded-2xl shadow-xl">
-                            <p class="font-serif text-base text-gold italic leading-relaxed">
-                                "Jab aap hum first time kiss kiye the."
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
 
 
-        <!-- SECTION 5: SECRET MEMORY UNLOCK BUTTON -->
-        <section class="w-full py-16 my-8 reveal-on-scroll flex flex-col items-center">
-            <div class="glass-card rounded-3xl p-8 sm:p-12 w-full max-w-xl border border-gold/40 text-center flex flex-col items-center">
-                <span class="text-xs font-serif tracking-[0.2em] text-gold uppercase mb-2">Hidden Chapter</span>
-                <h3 class="font-serif text-2xl sm:text-3xl text-ivory mb-6">One More Memory?</h3>
-
-                <!-- Golden Lock Container -->
-                <div id="lockIconContainer" class="w-20 h-20 rounded-full bg-burgundy border-2 border-gold flex items-center justify-center text-gold text-3xl shadow-[0_0_25px_rgba(216,183,126,0.4)] my-4 cursor-pointer transition-transform hover:scale-110" onclick="unlockSecretMemory()">
+        <!-- SECTION 5: UNLOCKABLE SECRET MEMORY CAPSULE -->
+        <section class="w-full py-16 my-8 reveal-on-scroll">
+            <div class="glass-card p-8 sm:p-12 rounded-3xl border border-gold/40 text-center max-w-2xl mx-auto relative overflow-hidden">
+                <div class="glow-orb bg-gold/10 w-48 h-48 -top-10 -left-10"></div>
+                
+                <div id="lockIconContainer" class="w-16 h-16 rounded-full bg-burgundy border border-gold/50 flex items-center justify-center mx-auto mb-6 text-gold text-2xl shadow-lg cursor-pointer hover:scale-110 transition-transform" onclick="unlockCapsule()">
                     <i id="lockIcon" class="fa-solid fa-lock"></i>
                 </div>
 
-                <!-- Unlock Button -->
-                <button id="unlockBtn" onclick="unlockSecretMemory()" class="mt-4 px-8 py-3 rounded-full bg-gradient-to-r from-roseDeep via-burgundy to-roseDeep border border-gold/50 text-gold hover:text-ivory font-serif text-base tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(216,183,126,0.4)] active:scale-95">
-                    Unlock a Secret Memory
-                </button>
+                <h3 id="capsuleHeading" class="font-serif text-2xl sm:text-3xl text-ivory font-medium">Locked Secret Capsule</h3>
+                <p id="capsuleSub" class="text-sm text-mutedText mt-2">Tap the lock icon above to reveal a hidden note for you.</p>
 
-                <!-- Revealed Secret Box -->
-                <div id="secretMemoryBox" class="max-h-0 overflow-hidden opacity-0 transition-all duration-700 ease-in-out w-full mt-6">
-                    <div class="p-6 rounded-2xl bg-burgundy/90 border border-gold/40 text-gold font-serif italic text-lg leading-relaxed shadow-2xl relative">
-                        <i class="fa-solid fa-quote-left text-roseDeep text-2xl absolute top-3 left-3 opacity-40"></i>
-                        <p class="relative z-10 px-4">
-                            "Kucch memories bhula nahi jata jiwan jeene ka aadhar ban jata hai. aapka wala sara wahi hai."
-                        </p>
-                        <i class="fa-solid fa-quote-right text-roseDeep text-2xl absolute bottom-3 right-3 opacity-40"></i>
-                    </div>
+                <div id="capsuleContent" class="hidden mt-6 pt-6 border-t border-gold/20 animate-fadeIn">
+                    <p class="font-handwriting text-2xl text-gold leading-relaxed">
+                        "Bauaa, aap mere liye duniya ki sabse pyari feeling ho. Aapke saath guzara har second mere liye anmol hai!"
+                    </p>
+                    <span class="block text-xs font-serif text-ivory/80 mt-4 tracking-widest uppercase">— Yours Forever</span>
                 </div>
             </div>
         </section>
 
 
-        <!-- SECTION 6: CHAPTER ENDING & NEXT PAGE TRANSITION -->
-        <section class="w-full py-16 my-8 text-center reveal-on-scroll">
-            <div class="max-w-xl mx-auto space-y-6">
-                <!-- Decorative Star SVG -->
-                <div class="w-16 h-16 mx-auto text-gold/60">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                        <path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4-6.2-4.5h7.6z"/>
-                    </svg>
-                </div>
+        <!-- SECTION 6: FOOTER & NAVIGATION TO NEXT CHAPTER -->
+        <footer class="w-full pt-16 pb-8 border-t border-gold/15 mt-16 flex flex-col items-center text-center">
+            <span class="font-serif text-2xl text-gold mb-2">RuHi</span>
+            <p class="text-xs text-mutedText max-w-xs mb-8">
+                Created with love for the most special person in the world.
+            </p>
 
-                <h2 class="font-serif text-3xl sm:text-5xl text-ivory leading-tight">
-                    "Ye sab to ittu sa hai aapke bare me jo hum bas likhte ja sakte hai ."
-                </h2>
-                
-                <p class="text-mutedText font-sans text-sm sm:text-base">
-                    Bahut kucch baki hai.
-                </p>
-
-                <!-- Forward Navigation Button to 4.html -->
-                <div class="pt-6">
-                    <a href="4.html" onclick="navigateTo(event, '4.html')" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-roseDeep via-burgundy to-roseDeep border-2 border-gold/50 text-gold hover:text-ivory font-serif text-lg tracking-wider transition-all duration-500 hover:scale-105 hover:shadow-[0_0_35px_rgba(216,183,126,0.5)] active:scale-95 group">
-                        <span>Discover What's in My Heart</span>
-                        <i class="fa-solid fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
+            <div class="flex items-center gap-4">
+                <a href="2.html" onclick="navigateTo(event, '2.html')" class="px-6 py-2.5 rounded-full border border-gold/30 text-xs text-ivory hover:text-gold hover:border-gold transition-all">
+                    ← Previous Chapter
+                </a>
+                <a href="4.html" onclick="navigateTo(event, '4.html')" class="px-8 py-2.5 rounded-full bg-gradient-to-r from-roseDeep to-burgundy border border-gold/50 text-xs text-gold hover:text-ivory hover:shadow-[0_0_20px_rgba(216,183,126,0.4)] transition-all font-medium">
+                    Next Chapter →
+                </a>
             </div>
-        </section>
+
+            <span class="text-[10px] text-mutedText/60 mt-12 tracking-widest uppercase">
+                © RuHi • Our Little Universe
+            </span>
+        </footer>
 
     </main>
 
 
-    <!-- LIGHTBOX MODAL FOR PHOTO GALLERY -->
-    <div id="lightbox" class="fixed inset-0 z-50 bg-midnight/95 backdrop-blur-xl hidden flex flex-col items-center justify-center p-4">
-        <!-- Close Button -->
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-burgundy border border-gold/30 flex items-center justify-center text-gold hover:text-ivory text-lg transition-colors focus:outline-none">
+    <!-- LIGHTBOX MODAL FOR POLAROID IMAGES -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 bg-midnight/90 backdrop-blur-xl hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-gold/70 hover:text-gold text-2xl p-2 focus:outline-none">
             <i class="fa-solid fa-xmark"></i>
         </button>
+        <button onclick="changeLightbox(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass-card flex items-center justify-center text-gold hover:text-ivory border border-gold/30 focus:outline-none">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="changeLightbox(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass-card flex items-center justify-center text-gold hover:text-ivory border border-gold/30 focus:outline-none">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
 
-        <!-- Main Lightbox Photo Frame -->
-        <div class="max-w-2xl w-full bg-burgundy/90 border border-gold/40 p-4 sm:p-6 rounded-2xl shadow-2xl flex flex-col items-center">
-            <div id="lightboxMedia" class="w-full h-64 sm:h-96 bg-midnight/90 rounded-xl overflow-hidden border border-gold/20 flex items-center justify-center relative">
-                <!-- Image or Fallback injected dynamically -->
+        <div class="max-w-xl w-full glass-card p-6 rounded-2xl border border-gold/40 flex flex-col items-center text-center">
+            <div id="lightboxImageContainer" class="w-full h-80 bg-midnight/80 rounded-xl border border-gold/20 flex items-center justify-center overflow-hidden mb-4">
+                <img id="lightboxImg" src="" alt="Memory" class="w-full h-full object-cover hidden">
+                <div id="lightboxFallback" class="flex flex-col items-center justify-center text-gold p-4">
+                    <i class="fa-solid fa-heart text-4xl mb-3 animate-pulse"></i>
+                    <span id="lightboxFallbackTitle" class="font-serif text-lg text-ivory">Memory Photo</span>
+                </div>
             </div>
-            
-            <div class="mt-4 text-center">
-                <h3 id="lightboxTitle" class="font-handwriting text-2xl text-gold"></h3>
-                <span id="lightboxDate" class="text-xs text-mutedText uppercase tracking-widest block mt-1"></span>
-            </div>
-
-            <!-- Next / Previous Controls -->
-            <div class="flex items-center gap-6 mt-6">
-                <button onclick="prevLightbox()" class="w-10 h-10 rounded-full bg-roseDeep/30 border border-gold/30 flex items-center justify-center text-gold hover:text-ivory hover:bg-roseDeep transition-all">
-                    <i class="fa-solid fa-chevron-left text-xs"></i>
-                </button>
-                <span id="lightboxCounter" class="text-xs text-mutedText font-serif">1 / 8</span>
-                <button onclick="nextLightbox()" class="w-10 h-10 rounded-full bg-roseDeep/30 border border-gold/30 flex items-center justify-center text-gold hover:text-ivory hover:bg-roseDeep transition-all">
-                    <i class="fa-solid fa-chevron-right text-xs"></i>
-                </button>
-            </div>
+            <h4 id="lightboxTitle" class="font-serif text-2xl text-gold">Memory Title</h4>
+            <p id="lightboxDesc" class="font-sans text-xs text-mutedText mt-1">Memory Caption</p>
         </div>
     </div>
 
 
-    <!-- FOOTER -->
-    <footer class="w-full border-t border-gold/10 py-8 text-center relative z-20 glass-card">
-        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-mutedText">
-            <div class="flex items-center gap-2 font-serif">
-                <span class="text-gold">RuHi Universe</span>
-                <span>•</span>
-                <span>Chapter </span>
-            </div>
-
-            <div class="flex items-center gap-6">
-                <a href="2.html" onclick="navigateTo(event, '2.html')" class="hover:text-gold transition-colors">
-                    <i class="fa-solid fa-chevron-left text-[10px] mr-1"></i> Chapter 
-                </a>
-                <a href="4.html" onclick="navigateTo(event, '4.html')" class="hover:text-gold transition-colors">
-                    Chapter 03 <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i>
-                </a>
-            </div>
-
-            <div class="text-[10px] text-mutedText/60">
-                Made with love by Rishuuuaaaa
-            </div>
-        </div>
-    </footer>
-
-
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        /* --------------------------------------------------
-         * 1. ACCESS CONTROL & SESSION VERIFICATION
-         * -------------------------------------------------- */
-        (function checkAccess() {
-            const isUnlocked = localStorage.getItem('ruhi_unlocked') || sessionStorage.getItem('ruhi_unlocked');
-            if (!isUnlocked) {
-                sessionStorage.setItem('ruhi_unlocked', 'true');
-            }
-        })();
+        // Memory Data for Lightbox Modal
+        const memoryData = [
+            { title: "First Time I Saw You", caption: "13 November 2022 • The day my heart skipped a beat.", img: "assets/memories/a1.jpg" },
+            { title: "First Message Sent", caption: "18 December 2022 • Small hellos that changed everything.", img: "assets/memories/a2.jpg" },
+            { title: "Your Sweet Reply", caption: "23 December 2022 • The moment I smiled at my screen.", img: "assets/memories/a3.jpg" },
+            { title: "Hours on Phone", caption: "28 March 2023 • Hearing your voice felt like home.", img: "assets/memories/a4.jpg" },
+            { title: "Our Special Bond", caption: "25 June 2024 • A promise written in the stars.", img: "assets/memories/a5.jpg" }
+        ];
 
+        let currentMemoryIndex = 0;
 
-        /* --------------------------------------------------
-         * 2. SMOOTH PAGE TRANSITIONS
-         * -------------------------------------------------- */
-        window.addEventListener('DOMContentLoaded', () => {
-            const overlay = document.getElementById('transition-overlay');
+        // Open Lightbox
+        function openLightbox(index) {
+            currentMemoryIndex = index;
+            updateLightbox();
+            const modal = document.getElementById('lightboxModal');
+            modal.classList.remove('hidden');
             setTimeout(() => {
-                overlay.style.opacity = '0';
-            }, 100);
-        });
+                modal.classList.remove('opacity-0');
+            }, 10);
+        }
 
-        function navigateTo(event, url) {
-            event.preventDefault();
+        // Close Lightbox
+        function closeLightbox() {
+            const modal = document.getElementById('lightboxModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Navigate Lightbox
+        function changeLightbox(dir) {
+            currentMemoryIndex = (currentMemoryIndex + dir + memoryData.length) % memoryData.length;
+            updateLightbox();
+        }
+
+        function updateLightbox() {
+            const data = memoryData[currentMemoryIndex];
+            const img = document.getElementById('lightboxImg');
+            const fallback = document.getElementById('lightboxFallback');
+            const title = document.getElementById('lightboxTitle');
+            const desc = document.getElementById('lightboxDesc');
+            const fallbackTitle = document.getElementById('lightboxFallbackTitle');
+
+            title.textContent = data.title;
+            desc.textContent = data.caption;
+            fallbackTitle.textContent = data.title;
+
+            img.src = data.img;
+            img.onload = () => {
+                img.classList.remove('hidden');
+                fallback.classList.add('hidden');
+            };
+            img.onerror = () => {
+                img.classList.add('hidden');
+                fallback.classList.remove('hidden');
+            };
+        }
+
+        // Unlock Capsule Interaction
+        function unlockCapsule() {
+            const icon = document.getElementById('lockIcon');
+            const container = document.getElementById('lockIconContainer');
+            const heading = document.getElementById('capsuleHeading');
+            const sub = document.getElementById('capsuleSub');
+            const content = document.getElementById('capsuleContent');
+
+            if (content.classList.contains('hidden')) {
+                container.classList.add('animate-unlock');
+                setTimeout(() => {
+                    icon.className = 'fa-solid fa-lock-open text-gold';
+                    container.classList.remove('animate-unlock');
+                    heading.textContent = "Unlocked Note";
+                    sub.textContent = "Here is what my heart wanted to tell you:";
+                    content.classList.remove('hidden');
+                }, 600);
+            }
+        }
+
+        // Smooth Page Transitions
+        function navigateTo(e, url) {
+            e.preventDefault();
             const overlay = document.getElementById('transition-overlay');
             overlay.style.opacity = '1';
             setTimeout(() => {
                 window.location.href = url;
-            }, 750);
-        }
-
-
-        /* --------------------------------------------------
-         * 3. SCROLL PROGRESS INDICATOR
-         * -------------------------------------------------- */
-        window.addEventListener('scroll', () => {
-            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('scroll-progress').style.width = scrolled + '%';
-        });
-
-
-        /* --------------------------------------------------
-         * 4. SCROLL REVEAL OBSERVER
-         * -------------------------------------------------- */
-        const revealElements = document.querySelectorAll('.reveal-on-scroll');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.15 });
-
-        revealElements.forEach(el => observer.observe(el));
-
-
-        /* --------------------------------------------------
-         * 5. POLAROID LIGHTBOX SYSTEM
-         * -------------------------------------------------- */
-        const galleryData = [
-            { src: '01.jpg', title: 'Stolen Glances', date: 'November 2022', icon: 'fa-camera-retro' },
-            { src: '02.jpg', title: 'Late Night Talks', date: 'December 2022', icon: 'fa-cloud-moon' },
-            { src: '03.jpg', title: 'First Coffee Together', date: 'August 2023', icon: 'fa-mug-hot' },
-            { src: '04.jpg', title: 'Pure Happiness', date: 'October 2023', icon: 'fa-smile-beam' },
-            { src: '05.jpg', title: 'Golden Hours', date: 'January 2024', icon: 'fa-sparkles' },
-            { src: '06.jpg', title: 'The Magic Kiss', date: 'June 2024', icon: 'fa-heart' },
-            { src: '07.jpg', title: 'Quiet Adventures', date: 'August 2024', icon: 'fa-compass' },
-            { src: '08.jpg', title: 'Always & Forever', date: 'Present Day', icon: 'fa-cake-candles' }
-        ];
-
-        let currentLightboxIdx = 0;
-
-        function openLightbox(index) {
-            currentLightboxIdx = index;
-            updateLightboxContent();
-            document.getElementById('lightbox').classList.remove('hidden');
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.add('hidden');
-        }
-
-        function updateLightboxContent() {
-            const item = galleryData[currentLightboxIdx];
-            const mediaContainer = document.getElementById('lightboxMedia');
-            
-            // Build image with graceful fallback display
-            mediaContainer.innerHTML = `
-                <img src="${item.src}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                <div class="hidden w-full h-full flex-col items-center justify-center p-6 bg-roseDeep/30 text-center">
-                    <i class="fa-solid ${item.icon} text-gold text-5xl mb-3"></i>
-                    <span class="text-sm text-gold font-serif">${item.title}</span>
-                    <span class="text-xs text-mutedText mt-1">${item.src}</span>
-                </div>
-            `;
-
-            document.getElementById('lightboxTitle').innerText = item.title;
-            document.getElementById('lightboxDate').innerText = item.date;
-            document.getElementById('lightboxCounter').innerText = `${currentLightboxIdx + 1} / ${galleryData.length}`;
-        }
-
-        function nextLightbox() {
-            currentLightboxIdx = (currentLightboxIdx + 1) % galleryData.length;
-            updateLightboxContent();
-        }
-
-        function prevLightbox() {
-            currentLightboxIdx = (currentLightboxIdx - 1 + galleryData.length) % galleryData.length;
-            updateLightboxContent();
-        }
-
-        // Keyboard Controls for Lightbox
-        window.addEventListener('keydown', (e) => {
-            const lightbox = document.getElementById('lightbox');
-            if (!lightbox.classList.contains('hidden')) {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowRight') nextLightbox();
-                if (e.key === 'ArrowLeft') prevLightbox();
-            }
-        });
-
-
-        /* --------------------------------------------------
-         * 6. SECRET MEMORY UNLOCK
-         * -------------------------------------------------- */
-        let isUnlocked = false;
-        function unlockSecretMemory() {
-            if (isUnlocked) return;
-            isUnlocked = true;
-
-            const lockContainer = document.getElementById('lockIconContainer');
-            const lockIcon = document.getElementById('lockIcon');
-            const secretBox = document.getElementById('secretMemoryBox');
-            const unlockBtn = document.getElementById('unlockBtn');
-
-            lockContainer.classList.add('animate-unlock');
-
-            setTimeout(() => {
-                lockIcon.className = "fa-solid fa-lock-open text-gold";
-                secretBox.style.maxHeight = '200px';
-                secretBox.style.opacity = '1';
-                unlockBtn.innerText = "Memory Unlocked ✨";
-                unlockBtn.disabled = true;
-                unlockBtn.classList.add('opacity-70', 'cursor-default');
             }, 600);
         }
 
+        // Fade in page on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('transition-overlay');
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+            }, 200);
+        });
 
-        /* --------------------------------------------------
-         * 7. FLOATING ROSE PETALS CANVAS ANIMATION
-         * -------------------------------------------------- */
+        // Scroll Progress Bar & Scroll Reveal
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+
+            // Reveal elements on scroll
+            const reveals = document.querySelectorAll('.reveal-on-scroll');
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight - 80) {
+                    el.classList.add('active');
+                }
+            });
+        });
+
+        // Audio Player Simulation / Logic
+        const musicBtn = document.getElementById('musicToggleBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        const musicStateText = document.getElementById('musicStateText');
+        const mainAudio = document.getElementById('mainAudio');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                musicIcon.className = "fa-solid fa-pause text-sm text-gold";
+                musicStateText.textContent = "Playing love theme...";
+                mainAudio.play().catch(() => {
+                    // Audio fallback if file missing
+                });
+            } else {
+                musicIcon.className = "fa-solid fa-music text-sm text-gold";
+                musicStateText.textContent = "Sabse nyari sabse pyariii";
+                mainAudio.pause();
+            }
+        });
+
+        // Floating Canvas Petals & Light Particle Effect
         const canvas = document.getElementById('petalCanvas');
         const ctx = canvas.getContext('2d');
-
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
 
@@ -972,124 +836,55 @@
             height = canvas.height = window.innerHeight;
         });
 
-        const petals = [];
-        const petalCount = 26;
-
-        class Petal {
+        class Particle {
             constructor() {
                 this.reset();
             }
+
             reset() {
                 this.x = Math.random() * width;
-                this.y = -20 - Math.random() * 40;
-                this.size = 5 + Math.random() * 7;
-                this.speedY = 0.5 + Math.random() * 1.1;
-                this.speedX = Math.sin(Math.random() * Math.PI) * 0.7;
+                this.y = Math.random() * height - height;
+                this.size = Math.random() * 4 + 2;
+                this.speedY = Math.random() * 1.2 + 0.4;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.opacity = Math.random() * 0.5 + 0.2;
                 this.rotation = Math.random() * 360;
-                this.rotationSpeed = (Math.random() - 0.5) * 1.4;
-                this.opacity = 0.25 + Math.random() * 0.45;
-                this.color = Math.random() > 0.4 ? '#6E3048' : '#B77B91';
+                this.rotSpeed = Math.random() * 1 - 0.5;
             }
+
             update() {
                 this.y += this.speedY;
-                this.x += Math.sin(this.y * 0.01) * 0.4 + this.speedX;
-                this.rotation += this.rotationSpeed;
-
-                if (this.y > height + 20) {
+                this.x += this.speedX;
+                this.rotation += this.rotSpeed;
+                if (this.y > height) {
                     this.reset();
                 }
             }
+
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate((this.rotation * Math.PI) / 180);
-                ctx.globalAlpha = this.opacity;
-
+                ctx.fillStyle = `rgba(216, 183, 126, ${this.opacity})`;
                 ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.bezierCurveTo(-this.size, -this.size / 2, -this.size, this.size, 0, this.size * 1.5);
-                ctx.bezierCurveTo(this.size, this.size, this.size, -this.size / 2, 0, 0);
-                ctx.fillStyle = this.color;
+                ctx.ellipse(0, 0, this.size, this.size * 1.6, 0, 0, Math.PI * 2);
                 ctx.fill();
-
                 ctx.restore();
             }
         }
 
-        for (let i = 0; i < petalCount; i++) {
-            petals.push(new Petal());
-        }
+        const particles = Array.from({ length: 30 }, () => new Particle());
 
-        function animatePetals() {
+        function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
-            petals.forEach(petal => {
-                petal.update();
-                petal.draw();
+            particles.forEach(p => {
+                p.update();
+                p.draw();
             });
-            requestAnimationFrame(animatePetals);
-        }
-        animatePetals();
-
-
-        /* --------------------------------------------------
-         * 8. MUSIC PLAYER LOGIC (MP3 + SYNTHESIZER FALLBACK)
-         * -------------------------------------------------- */
-        const musicToggleBtn = document.getElementById('musicToggleBtn');
-        const musicIcon = document.getElementById('musicIcon');
-        const musicStateText = document.getElementById('musicStateText');
-        const mainAudio = document.getElementById('mainAudio');
-        
-        let isPlaying = false;
-        let audioCtx = null;
-        let synthInterval = null;
-
-        function playSynthFallback() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-
-            const notes = [293.66, 349.23, 440.00, 523.25, 440.00]; // D4, F4, A4, C5, A4
-            let noteIdx = 0;
-
-            synthInterval = setInterval(() => {
-                if (!isPlaying) return;
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(notes[noteIdx % notes.length], audioCtx.currentTime);
-
-                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.04, audioCtx.currentTime + 1);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.8);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start();
-                osc.stop(audioCtx.currentTime + 4);
-                noteIdx++;
-            }, 2600);
+            requestAnimationFrame(animateCanvas);
         }
 
-        musicToggleBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            if (isPlaying) {
-                mainAudio.play().then(() => {
-                    musicIcon.className = "fa-solid fa-volume-high text-gold animate-pulse";
-                    musicStateText.innerText = "Playing Audio";
-                }).catch(() => {
-                    // Fallback to synth if mp3 file is missing
-                    playSynthFallback();
-                    musicIcon.className = "fa-solid fa-volume-high text-gold animate-pulse";
-                    musicStateText.innerText = "Playing Atmosphere";
-                });
-            } else {
-                mainAudio.pause();
-                if (synthInterval) clearInterval(synthInterval);
-                musicIcon.className = "fa-solid fa-music text-sm";
-                musicStateText.innerText = "Click to Play Ambient";
-            }
-        });
+        animateCanvas();
     </script>
 </body>
 </html>
